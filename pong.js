@@ -4,7 +4,7 @@ ball = ball
 _x and _y mean x or y position of that element
 _dx and _dy mean acceleration of that element
 */
-document.write("Hi"+"<script type='text/javascript' src='pong_variables.js'></script>");
+document.write(<script type='text/javascript' src='pong_variables.js'></script>);
 
 /*
 Players names are received.
