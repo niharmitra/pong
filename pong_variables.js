@@ -20,7 +20,7 @@ var p1_y = 230; //where it is positioning wise
 var p2_y = 230;
 var p1_dy = 0;
 var p2_dy = 0;
-var paddle_speed = 2.paddle_speed_df;
+var paddle_speed = paddle_speed_df;
 var paddle_height = paddle_height_df; //paddle height defined in pixels
 
 //Set up the ball
