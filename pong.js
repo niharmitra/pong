@@ -4,6 +4,7 @@ ball = ball
 _x and _y mean x or y position of that element
 _dx and _dy mean acceleration of that element
 */
+document.write("<script type='text/javascript' src='pong_variables.js'></script>");
 
 /*
 Players names are received.
@@ -22,7 +23,6 @@ var playerName = function() {
 	document.getElementById("player2-name").innerHTML = player2_name+":";
 }
 
-document.write("<script type='text/javascript' src='pong_variables.js'></script>");
 
 function convertInput(input, default) {
 	input = parseInt(input);
