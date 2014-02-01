@@ -1,0 +1,31 @@
+#gamearea {
+  position: relative;
+  background-color: black;
+  overflow: hidden;
+  width: 500px;
+  height: 500px;
+}
+#paddle1 { position: absolute;
+  position: absolute;
+  background-color: white;
+  top: 230;
+  left: 10;
+  width : 7px;
+  height: 40px;
+}
+#paddle2  {
+  position: absolute; 
+  background-color: white;
+  top: 230;
+  left: 483;
+  width : 7px;
+  height: 40px;
+}
+#ball{
+  position: absolute;
+  background-color: white;
+  top: 247;
+  left: 247;
+  width : 10px;
+  height: 10px;
+}
