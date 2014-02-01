@@ -24,10 +24,10 @@ var playerName = function() {
 }
 
 
-function convertInput(input, default) {
+function convertInput(input, default_val) {
 	input = parseInt(input);
 	if(input == NaN) {
-		return default;
+		return default_val;
 	}
 	else {
 		return input;
