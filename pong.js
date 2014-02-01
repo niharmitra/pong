@@ -53,7 +53,7 @@ function newGame() {
 	gameTick();
 }
 
-function gameTick {
+function gameTick() {
 	ball_x += ball_dx;
 	ball_y += ball_dy;
 	//makes sure paddle doesn't go off screen
