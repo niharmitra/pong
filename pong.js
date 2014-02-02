@@ -106,6 +106,9 @@ function newGame() {
 	ball_settings = document.getElementsByName("ball_settings");
 	ball.dx = ball_settings[0].value;
 
+	basic_settings = document.getElementsByName("basic_settings");
+
+	new_name = 
 	if(new_name){
 		playerName();
 	}
@@ -156,7 +159,7 @@ function gameTick() {
 		document.getElementById("player2-score").innerHTML = p2_score;
 		ball_miss += 1;
 	}
-	(ball.dx<0)? ball.dx-=ball_inc:ball.dx+=ball_inc;
+	(ball.dx<0)? ball.dx-=ball.inc:ball.dx+=ball.inc;
 	ball.style.top=ball.y;
 	ball.style.left=ball.x;
 	setTimeout('gameTick()', 5);
