@@ -12,6 +12,19 @@ function paddle(element_id, y_df, dy_df, speed_df, height_df) {
 
 function paddleSet(paddle_settings) {
 	this.height = paddle_settings[0].value;
+	// paddle1_settings = document.getElementsByName("paddle1_settings");
+	// paddle_height = paddle1_settings[0].value;
+
+	// if(!advanced) {
+	// 	paddle2_height = paddle_height;
+	// }
+	// else {
+	// 	paddle2_settings = document.getElementsByName("paddle2_settings");
+	// 	paddle2_height
+	// }
+
+	// p1.style.height = convertInput(paddle_height,p1.height_df);
+	// p2.style.height = convertInput(paddle2_height,p2.height_df);
 }
 
 var p1 = new paddle("paddle1", 230, 0, 2.0, 40);
@@ -92,20 +105,6 @@ function newGame() {
 	//gets input from form
 	ball_settings = document.getElementsByName("ball_settings");
 	ball.dx = ball_settings[0].value;
-
-	paddle1_settings = document.getElementsByName("paddle1_settings");
-	paddle_height = paddle1_settings[0].value;
-
-	if(!advanced) {
-		paddle2_height = paddle_height;
-	}
-	else {
-		paddle2_settings = document.getElementsByName("paddle2_settings");
-		paddle2_height
-	}
-
-	p1.style.height = convertInput(paddle_height,paddle_height_df);
-	p2.style.height = convertInput(paddle2_height,paddle_height_df);
 
 	if(new_name){
 		playerName();
