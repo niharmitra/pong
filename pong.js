@@ -119,11 +119,11 @@ function gameTick() {
 	ball.x += ball.dx;
 	ball.y += ball.dy;
 	//makes sure paddle doesn't go off screen
-	p1_y = Math.min(Math.max(p1_y + p1_dy, 0), 460);
-	p2_y = Math.min(Math.max(p2_y + p2_dy, 0), 460);
+	p1.y = Math.min(Math.max(p1.y + p1.dy, 0), 460);
+	p2.y = Math.min(Math.max(p2.y + p2.dy, 0), 460);
 	
-	p1.style.top=p1_y;
-	p2.style.top=p2_y;
+	p1.style.top=p1.y;
+	p2.style.top=p2.y;
 	
 	var offset = Math.floor(Math.random()*50);
 
@@ -131,11 +131,11 @@ function gameTick() {
 	if (ball.y > 489 || ball.y < 1) {
 		dy *= -1;
 	}
-	if (ball.x >= 472 && ball.y >= p2_y && ball.y <= p2_y + 40) {
+	if (ball.x >= 472 && ball.y >= p2.y && ball.y <= p2.y + 40) {
 		ball.dx *= -1;
 		ball_miss = 0;
 	}
-	if (ball.x <= 16 && ball.y >= p1_y && ball.y <= p1_y + 40) {
+	if (ball.x <= 16 && ball.y >= p1.y && ball.y <= p1.y + 40) {
 		ball.dx *= -1;
 		ball_miss = 0;
 	}
@@ -170,36 +170,36 @@ document.getElementById("basic_settings").onchange = newGame();
 //changes paddle speeds according to key presses
 document.onkeydown = function(e) {
 	if(e.keyCode == 83) {
-		p1_dy = paddle_speed;
+		p1.dy = paddle_speed;
     }
     if(e.keyCode == 87) {
-		p1_dy = -paddle_speed;
+		p1.dy = -paddle_speed;
     }
 	if(e.keyCode == 40) {
 		//stops scrolling of page
 		e.preventDefault();
-		p2_dy = paddle_speed;
+		p2.dy = paddle_speed;
     }
     if(e.keyCode == 38) {
 		//stops scrolling of page
 		e.preventDefault();
-		p2_dy = -paddle_speed;
+		p2.dy = -paddle_speed;
     }
 	return true;
 }
 
 document.onkeyup = function(e) {
     if(e.keyCode == 83) {
-		p1_dy = 0;
+		p1.dy = 0;
     }
     if(e.keyCode == 87) {
-		p1_dy = 0;
+		p1.dy = 0;
     }
     if(e.keyCode == 40) {
-		p2_dy = 0;
+		p2.dy = 0;
     }
     if(e.keyCode == 38) {
-		p2_dy = 0;
+		p2.dy = 0;
     }
 	return true;
 }
