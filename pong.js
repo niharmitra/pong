@@ -146,7 +146,7 @@ function gameTick() {
 		ball_miss += 1;
 	}
 	(ball_dx<0)? ball_dx-=ball_inc:ball_dx+=ball_inc;
-	setTimeout('gameTick()', 1);
+	setTimeout('gameTick()', 5);
 }
 
 playerName();
