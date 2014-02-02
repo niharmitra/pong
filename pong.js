@@ -48,7 +48,6 @@ function newGame() {
 
 	p1.style.height = paddle_height;
 	p1.style.height = paddle_height;
-	
 
 	gameTick();
 }
