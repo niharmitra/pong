@@ -62,7 +62,7 @@ var ball_miss; //counts how many times the ball has been missed by a particular 
 var ball_settings;
 var paddle1_settings;
 var paddle2_settings;
-var new_name = false;
+var new_name;
 var advanced = false; //advanced settings or not
 
 /*
@@ -104,7 +104,7 @@ function newGame() {
 	basic_settings = document.getElementsByName("basic_settings");
 
 	new_name = basic_settings[0].checked;
-	if(new_name) {
+	if(new_name == true) {
 		playerName();
 	}
 	else {
