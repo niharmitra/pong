@@ -174,20 +174,20 @@ document.getElementById("basic_settings").onchange = newGame();
 //changes paddle speeds according to key presses
 document.onkeydown = function(e) {
 	if(e.keyCode == 83) {
-		p1.dy = paddle_speed;
+		p1.dy = p1.paddle_speed;
     }
     if(e.keyCode == 87) {
-		p1.dy = -paddle_speed;
+		p1.dy = -p1.paddle_speed;
     }
 	if(e.keyCode == 40) {
 		//stops scrolling of page
 		e.preventDefault();
-		p2.dy = paddle_speed;
+		p2.dy = p2.paddle_speed;
     }
     if(e.keyCode == 38) {
 		//stops scrolling of page
 		e.preventDefault();
-		p2.dy = -paddle_speed;
+		p2.dy = -p2.paddle_speed;
     }
 	return true;
 }
