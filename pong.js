@@ -22,6 +22,8 @@ var p1_dy = 0;
 var p2_dy = 0;
 var paddle_speed = paddle_speed_df;
 var paddle_height = paddle_height_df; //paddle height defined in pixels
+var paddle2_height = paddle_height_df;
+var paddle2_speed = paddle_speed_df;
 
 //Set up the ball
 var ball_spawn_x = ball_spawn_x_df;
@@ -82,15 +84,16 @@ function newGame() {
 	//gets input from form
 	ball_settings = document.getElementsByName("ball_settings");
 	paddle1_settings = document.getElementsByName("paddle1_settings");
-	window.alert(ball_spawn_x);
+
+	ball_dx = ball_settings[0].value;
+	paddle_height = paddle1_settings[0].value;
+
 	if(!advanced) {
-		paddle2_settings = document.getElementsByName("paddle1_settings");
+		paddle2_height = paddle_height;
 	}
 	else {
 		//paddle2_settings = document.getElementsByName("paddle2_settings");
 	}
-
-	paddle_height = paddle1_settings[0].value;
 
 	p1.style.height = convertInput(paddle_height,paddle_height_df);
 	p2.style.height = convertInput(paddle2_height,paddle_height_df);
