@@ -24,7 +24,7 @@ var paddle_speed = paddle_speed_df;
 var paddle_height = paddle_height_df; //paddle height defined in pixels
 
 //Set up the ball
-var ball_spawn_x = ball_spawn_x_df;
+ball_spawn_x = ball_spawn_x_df;
 var ball_spawn_y = ball_spawn_y_df;
 var ball = document.getElementById("ball");
 var ball_x = ball_spawn_x;
