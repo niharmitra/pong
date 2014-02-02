@@ -38,7 +38,7 @@ function newGame() {
 	//gets input from form
 	ball_settings = document.getElementsByName("ball_settings");
 	paddle1_settings = document.getElementsByName("paddle1_settings");
-
+	window.alert(ball_spawn_x);
 	if(!advanced) {
 		paddle2_settings = document.getElementsByName("paddle1_settings");
 	}
