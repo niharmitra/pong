@@ -19,7 +19,7 @@ var p2 = new paddle("paddle2", 230, 0, 2.0, 40);
 
 //Constructor for Ball Object
 function ball(element_id, spawn_x_df, spawn_y_df, dx_df, dy_df, inc_df) {
-	this.style = document.getElementById(element_id).style;
+	//this.style = document.getElementById(element_id).style;
 
 	this.spawn_x_df = spawn_x_df;
 	this.spawn_y_df = spawn_y_df;
