@@ -27,6 +27,7 @@ function paddleSet(paddle_settings) {
 	// p2.style.height = convertInput(paddle2_height,p2.height_df);
 }
 
+//Creates paddles
 var p1 = new paddle("paddle1", 230, 0, 2.0, 40);
 var p2 = new paddle("paddle2", 230, 0, 2.0, 40);
 
@@ -79,12 +80,12 @@ Players names are received.
 function playerName() {
 	var player1_name = null;
 	var player2_name = null;
-	while(!player1_name){
+	while(!player1_name) {
 		player1_name = prompt("What is player 1's name?");
 	}
 	document.getElementById("player1-name").innerHTML = player1_name+":";
 	
-	while(!player2_name){
+	while(!player2_name) {
 		player2_name = prompt("What is player 2's name?");
 	}
 	document.getElementById("player2-name").innerHTML = player2_name+":";
@@ -108,8 +109,8 @@ function newGame() {
 
 	basic_settings = document.getElementsByName("basic_settings");
 
-	new_name = 
-	if(new_name){
+	new_name = basic_settings[0].checked;
+	if(new_name) {
 		playerName();
 	}
 	else {
