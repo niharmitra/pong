@@ -23,8 +23,8 @@ function ball(element_id, spawn_x_df, spawn_y_df, dx_df, dy_df, inc_df) {
 
 	this.spawn_x_df = spawn_x_df;
 	this.spawn_y_df = spawn_y_df;
-	this.spawn_x = spawn_x;
-	this.spawn_y = spawn_y;
+	this.spawn_x = spawn_x_df;
+	this.spawn_y = spawn_y_df;
 
 	this.dx_df = dx_df;
 	this.dy_df = dy_df;
@@ -39,7 +39,7 @@ function ball(element_id, spawn_x_df, spawn_y_df, dx_df, dy_df, inc_df) {
 }
 
 //Creates the ball
-var ball = new ball("ball", 247, 247, 0.8, 1.1, 0.0000000000001)
+var ball = new ball("ball", 247, 247, 0.8, 1.1, 0.0000000000001);
 
 var ball_miss; //counts how many times the ball has been missed by a particular player
 
