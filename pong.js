@@ -108,7 +108,7 @@ function newGame() {
 		playerName();
 	}
 	else {
-
+		window.alert("New game starting");
 	}
 	gameTick();
 }
