@@ -46,8 +46,10 @@ function newGame() {
 		//paddle2_settings = document.getElementsByName("paddle2_settings");
 	}
 
-	p1.style.height = paddle_height;
-	p1.style.height = paddle_height;
+	paddle_height = paddle1_settings[0].value;
+
+	p1.style.height = convertInput(paddle_height,paddle_height_df);
+	p2.style.height = convertInput(paddle2_height,paddle_height_df);
 
 	gameTick();
 }
