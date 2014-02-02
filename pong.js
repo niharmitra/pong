@@ -1,5 +1,5 @@
 //Constructor for paddles
-function paddle(element_id, y_df, dy_df, speed_df, height_df) {
+function paddle(element_id, y_df, dy_df, speed_df, height_df, score_df) {
 	this.style = document.getElementById(element_id);
 
 	this.y = y_df;
@@ -8,6 +8,7 @@ function paddle(element_id, y_df, dy_df, speed_df, height_df) {
 	this.height = height_df;
 
 	this.set = paddleSet;
+	this.score = score_df;
 }
 
 function paddleSet(paddle_settings) {
@@ -28,8 +29,8 @@ function paddleSet(paddle_settings) {
 }
 
 //Creates paddles
-var p1 = new paddle("paddle1", 230, 0, 2.0, 40);
-var p2 = new paddle("paddle2", 230, 0, 2.0, 40);
+var p1 = new paddle("paddle1", 230, 0, 2.0, 40, 0);
+var p2 = new paddle("paddle2", 230, 0, 2.0, 40, 0);
 
 //Constructor for Ball Object
 function ball(element_id, spawn_x_df, spawn_y_df, dx_df, dy_df, inc_df) {
@@ -57,8 +58,8 @@ var ball = new ball("ball", 247, 247, 0.8, 1.1, 0.0000000000001);
 
 var ball_miss; //counts how many times the ball has been missed by a particular player
 
-var p1_score = 0;
-var p2_score = 0;
+var p1.score = 0;
+var p2.score = 0;
 
 //Settings Declared
 var ball_settings;
@@ -145,19 +146,19 @@ function gameTick() {
 	}
 	//if ball goes out of bounds, gives pts and respawns
 	if(ball.x > 490) {
- 		p1_score += 1;
+ 		p1.score += 1;
 		//makes the serve distance longer, randomizes spawn
  		ball.x = ball.spawn_x-offset;
  		ball.y = ball.spawn_y;
-		document.getElementById("player1-score").innerHTML = p1_score;
+		document.getElementById("player1-score").innerHTML = p1.score;
 		ball_miss +=1;
 	}
  	if(ball.x < 10) {
-    	p2_score += 1;
+    	p2.score += 1;
 		//makes the serve distance longer
 		ball.x = ball.spawn_x+offset;
 		ball.y = ball.spawn_y;
-		document.getElementById("player2-score").innerHTML = p2_score;
+		document.getElementById("player2-score").innerHTML = p2.score;
 		ball_miss += 1;
 	}
 	(ball.dx<0)? ball.dx-=ball.inc:ball.dx+=ball.inc;
