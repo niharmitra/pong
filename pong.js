@@ -133,7 +133,7 @@ function gameTick() {
 
 	//bounces the ball off the paddle or wall
 	if (ball.y > 489 || ball.y < 1) {
-		dy *= -1;
+		ball.dy *= -1;
 	}
 	if (ball.x >= 472 && ball.y >= p2.y && ball.y <= p2.y + 40) {
 		ball.dx *= -1;
