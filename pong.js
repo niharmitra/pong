@@ -70,11 +70,7 @@ p1 = Paddle 1, p2 = paddle 2
 _x and _y mean x or y position of that element
 _dx and _dy mean acceleration of that element
 */
-document.write("<script type='text/javascript' src='pong_variables.js'></script>");
 
-/*
-Players names are received.
-*/
 function playerName() {
 	var player1_name = null;
 	var player2_name = null;
