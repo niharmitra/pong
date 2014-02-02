@@ -58,9 +58,6 @@ var ball = new ball("ball", 247, 247, 0.8, 1.1, 0.0000000000001);
 
 var ball_miss; //counts how many times the ball has been missed by a particular player
 
-var p1.score = 0;
-var p2.score = 0;
-
 //Settings Declared
 var ball_settings;
 var paddle1_settings;
@@ -169,8 +166,6 @@ function gameTick() {
 
 playerName();
 newGame();
-
-document.getElementById("basic_settings").onchange = newGame();
 
 //changes paddle speeds according to key presses
 document.onkeydown = function(e) {
