@@ -1,6 +1,6 @@
 //Constructor for paddles
 function paddle(element_id, y_df, dy_df, speed_df, height_df, score_df) {
-	this.style = document.getElementById(element_id);
+	this.style = document.getElementById(element_id).style;
 
 	this.y = y_df;
 	this.dy = dy_df;
@@ -33,8 +33,8 @@ var p1 = new paddle("paddle1", 230, 0, 2.0, 40, 0);
 var p2 = new paddle("paddle2", 230, 0, 2.0, 40, 0);
 
 //Constructor for Ball Object
-function ball(element_id, spawn_x_df, spawn_y_df, dx_df, dy_df, inc_df) {
-	this.style = document.getElementById(element_id).style;
+function ball(spawn_x_df, spawn_y_df, dx_df, dy_df, inc_df) {
+	this.style = document.getElementById("ball").style;
 
 	this.spawn_x_df = spawn_x_df;
 	this.spawn_y_df = spawn_y_df;
