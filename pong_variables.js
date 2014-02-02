@@ -3,11 +3,11 @@ This file declares all the variables, as well as their default values
 */
 
 //Default Values for variables
-ball_spawn_x_df = 247;
-ball_spawn_y_df = 247;
-ball_dx_df = 0.8;
-ball_dy_df = 1.1;
-ball_inc_df = 0.0000000000001;
+var ball_spawn_x_df = 247;
+var ball_spawn_y_df = 247;
+var ball_dx_df = 0.8;
+var ball_dy_df = 1.1;
+var ball_inc_df = 0.0000000000001;
 
 var paddle_speed_df = 2.0;
 var paddle_height_df = 40;
@@ -24,7 +24,7 @@ var paddle_speed = paddle_speed_df;
 var paddle_height = paddle_height_df; //paddle height defined in pixels
 
 //Set up the ball
-ball_spawn_x = ball_spawn_x_df;
+var ball_spawn_x = ball_spawn_x_df;
 var ball_spawn_y = ball_spawn_y_df;
 var ball = document.getElementById("ball");
 var ball_x = ball_spawn_x;
