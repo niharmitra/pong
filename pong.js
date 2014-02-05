@@ -120,6 +120,8 @@ function gameTick() {
 	
 	p1.style.top=p1.y;
 	p2.style.top=p2.y;
+	ball.style.top = ball.y;
+	ball.style.left = ball.x;
 	
 	var offset = Math.floor(Math.random()*50);
 
@@ -152,7 +154,7 @@ function gameTick() {
 		document.getElementById("player2-score").innerHTML = p2.score;
 		p1.misses += 1;
 	}
-	
+
 	if(ball.dx<0){
 		ball.dx-=ball.inc;
 	}
@@ -161,8 +163,6 @@ function gameTick() {
 	}
 	console.log("ball.dy = "+ball.dy +"\n");
 	console.log("ball.dx = "+ball.dx+"\n");
-	ball.style.top=ball.y;
-	ball.style.left=ball.x;
 	setTimeout('gameTick()', 5);
 }
 
