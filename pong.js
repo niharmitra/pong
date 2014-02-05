@@ -127,16 +127,16 @@ function gameTick() {
 	if (ball.y > 489 || ball.y < 1) {
 		ball.dy *= -1;
 	}
-	if (ball.x >= 472 && ball.y >= p2.y && ball.y <= p2.y + p2.height) {
+	else if (ball.x >= 472 && ball.y >= p2.y && ball.y <= p2.y + p2.height) {
 		ball.dx *= -1;
 		p2.misses = 0;
 	}
-	if (ball.x <= 16 && ball.y >= p1.y && ball.y <= p1.y + p1.height) {
+	else if (ball.x <= 16 && ball.y >= p1.y && ball.y <= p1.y + p1.height) {
 		ball.dx *= -1;
 		p1.misses = 0;
 	}
 	//if ball goes out of bounds, gives pts and respawns
-	if(ball.x > 490) {
+	else if(ball.x > 490) {
  		p1.score += 1;
 		//makes the serve distance longer, randomizes spawn
  		ball.x = ball.spawn_x-offset;
@@ -144,7 +144,7 @@ function gameTick() {
 		document.getElementById("player1-score").innerHTML = p1.score;
 		p2.misses +=1;
 	}
- 	if(ball.x < 10) {
+ 	else if(ball.x < 10) {
     	p2.score += 1;
 		//makes the serve distance longer
 		ball.x = ball.spawn_x+offset;
@@ -152,6 +152,7 @@ function gameTick() {
 		document.getElementById("player2-score").innerHTML = p2.score;
 		p1.misses += 1;
 	}
+	
 	if(ball.dx<0){
 		ball.dx-=ball.inc;
 	}
