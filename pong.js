@@ -120,6 +120,7 @@ function gameTick() {
 	
 	p1.style.top=p1.y;
 	p2.style.top=p2.y;
+
 	ball.style.top = ball.y;
 	ball.style.left = ball.x;
 	
@@ -161,8 +162,7 @@ function gameTick() {
 	else {
 		ball.dx+=ball.inc;
 	}
-	console.log("ball.dy = "+ball.dy +"\n");
-	console.log("ball.dx = "+ball.dx+"\n");
+	console.log("ball.dx = "+ball.x+"\n");
 	setTimeout('gameTick()', 5);
 }
 
