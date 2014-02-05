@@ -54,7 +54,7 @@ function ball(spawn_x_df, spawn_y_df, dx_df, dy_df, inc_df) {
 }
 
 //Creates the ball
-var ball = new ball("ball", 247, 247, 0.8, 1.1, 0.0000000000001);
+var ball = new ball(247, 247, 0.8, 1.1, 0.0000000000001);
 
 var ball_miss; //counts how many times the ball has been missed by a particular player
 
@@ -155,8 +155,8 @@ function gameTick() {
 		p1.misses += 1;
 	}
 	(ball.dx<0)? ball.dx-=ball.inc:ball.dx+=ball.inc;
-	console.log("ball.y = "+ball.y);
-	console.log("ball.x =" + ball.x);
+	console.log("ball.y = "+ball.y+"<br />");
+	console.log("ball.x =" + ball.x "<br />");
 	ball.style.top=ball.y;
 	ball.style.left=ball.x;
 	setTimeout('gameTick()', 5);
