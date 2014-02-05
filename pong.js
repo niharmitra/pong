@@ -156,7 +156,7 @@ function gameTick() {
 	}
 	(ball.dx<0)? ball.dx-=ball.inc:ball.dx+=ball.inc;
 	console.log("ball.y = "+ball.y+"<br />");
-	console.log("ball.x =" + ball.x "<br />");
+	console.log("ball.x =" + ball.x+"<br />");
 	ball.style.top=ball.y;
 	ball.style.left=ball.x;
 	setTimeout('gameTick()', 5);
