@@ -153,8 +153,8 @@ function gameTick() {
 		p1.misses += 1;
 	}
 	(ball.dx<0)? ball.dx-=ball.inc:ball.dx+=ball.inc;
-	console.log("ball.dy = "+ball.dy+<br />);
-	console.log("ball.dx = "+ball.dx+<br />);
+	console.log("ball.dy = "+ball.dy +"\n");
+	console.log("ball.dx = "+ball.dx+"\n");
 	ball.style.top=ball.y;
 	ball.style.left=ball.x;
 	setTimeout('gameTick()', 5);
