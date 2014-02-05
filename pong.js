@@ -113,6 +113,7 @@ function newGame() {
 
 function gameTick() {
 	ball.x += ball.dx;
+	console.log(ball.x+","+ball.y+","+ball.dx+","+ball.dy+"\n");
 	ball.y += ball.dy;
 	//makes sure paddle doesn't go off screen
 	p1.y = Math.min(Math.max(p1.y + p1.dy, 0), 460);
@@ -162,8 +163,7 @@ function gameTick() {
 	else {
 		ball.dx+=ball.inc;
 	}
-	console.log("ball.dx = "+ball.x+"\n");
-	setTimeout('gameTick()', 5);
+	setTimeout('gameTick()', 10);
 }
 
 playerName();
