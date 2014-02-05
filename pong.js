@@ -36,21 +36,21 @@ var p2 = new paddle("paddle2", 230, 0, 2.0, 40, 0);
 function ball(spawn_x_df, spawn_y_df, dx_df, dy_df, inc_df) {
 	this.style = document.getElementById("ball").style;
 
-	this.spawn_x_df = spawn_x_df;
-	this.spawn_y_df = spawn_y_df;
-	this.spawn_x = spawn_x_df;
-	this.spawn_y = spawn_y_df;
+	this.spawn_x_df = parseFloat(spawn_x_df);
+	this.spawn_y_df = parseFloat(spawn_y_df);
+	this.spawn_x = parseFloat(spawn_x_df);
+	this.spawn_y = parseFloat(spawn_y_df);
 
-	this.dx_df = dx_df;
-	this.dy_df = dy_df;
-	this.dx = dx_df;
-	this.dy = dy_df;
+	this.dx_df = parseFloat(dx_df);
+	this.dy_df = parseFloat(dy_df);
+	this.dx = parseFloat(dx_df);
+	this.dy = parseFloat(dy_df);
 
-	this.x = spawn_x_df;
-	this.y = spawn_y_df;
+	this.x = parseFloat(spawn_x_df);
+	this.y = parseFloat(spawn_y_df);
 
-	this.inc_df = inc_df;
-	this.inc = inc_df;
+	this.inc_df = parseFloat(inc_df);
+	this.inc = parseFloat(inc_df);
 }
 
 //Creates the ball
