@@ -107,9 +107,7 @@ function newGame() {
 	if(new_name == true) {
 		playerName();
 	}
-	else {
-		window.alert("New game starting");
-	}
+	else {}
 	gameTick();
 }
 
@@ -155,8 +153,8 @@ function gameTick() {
 		p1.misses += 1;
 	}
 	(ball.dx<0)? ball.dx-=ball.inc:ball.dx+=ball.inc;
-	console.log("ball.y = "+ball.y+"<br />");
-	console.log("ball.x =" + ball.x+"<br />");
+	console.log("ball.dy = "+ball.dy+<br />);
+	console.log("ball.dx = "+ball.dx+<br />);
 	ball.style.top=ball.y;
 	ball.style.left=ball.x;
 	setTimeout('gameTick()', 5);
