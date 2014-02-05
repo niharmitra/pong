@@ -152,7 +152,12 @@ function gameTick() {
 		document.getElementById("player2-score").innerHTML = p2.score;
 		p1.misses += 1;
 	}
-	(ball.dx<0)? ball.dx-=ball.inc:ball.dx+=ball.inc;
+	if(ball.dx<0){
+		ball.dx-=ball.inc;
+	}
+	else {
+		ball.dx+=ball.inc;
+	}
 	console.log("ball.dy = "+ball.dy +"\n");
 	console.log("ball.dx = "+ball.dx+"\n");
 	ball.style.top=ball.y;
