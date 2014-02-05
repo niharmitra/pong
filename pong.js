@@ -155,6 +155,8 @@ function gameTick() {
 		p1.misses += 1;
 	}
 	(ball.dx<0)? ball.dx-=ball.inc:ball.dx+=ball.inc;
+	console.log("ball.y = "+ball.y);
+	console.log("ball.x =" + ball.x);
 	ball.style.top=ball.y;
 	ball.style.left=ball.x;
 	setTimeout('gameTick()', 5);
