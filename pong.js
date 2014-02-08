@@ -33,7 +33,7 @@ var p1 = new paddle("paddle1", 230, 0, 2.0, 40, 0);
 var p2 = new paddle("paddle2", 230, 0, 2.0, 40, 0);
 
 //Constructor for Ball Object
-function ball(spawn_x_df, spawn_y_df, dx_df, dy_df, inc_df) {
+function ballConstructor(spawn_x_df, spawn_y_df, dx_df, dy_df, inc_df) {
 	this.style = document.getElementById("ball").style;
 
 	this.spawn_x_df = parseFloat(spawn_x_df);
@@ -54,7 +54,7 @@ function ball(spawn_x_df, spawn_y_df, dx_df, dy_df, inc_df) {
 }
 
 //Creates the ball
-var ball = new ball(247, 247, 0.8, 1.1, 0.0000000000001);
+var ball = new ballConstructor(247, 247, 0.8, 1.1, 0.0000000000001);
 
 var ball_miss; //counts how many times the ball has been missed by a particular player
 
@@ -113,6 +113,7 @@ function newGame() {
 
 function gameTick() {
 	ball.x += ball.dx;
+	//Why is ball.dx initially null? Why does ball.x go 247 to 2471e-13.
 	console.log(ball.x+","+ball.y+","+ball.dx+","+ball.dy+"\n");
 	ball.y += ball.dy;
 	//makes sure paddle doesn't go off screen
