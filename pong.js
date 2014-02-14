@@ -2,6 +2,11 @@
 function paddle(element_id, y_df, dy_df, speed_df, height_df, score_df) {
 	this.style = document.getElementById(element_id).style;
 
+	this.y_df = y_df;
+	this.dy_df = dy_df;
+	this.speed_df = speed_df;
+	this.height_df = height_df;
+
 	this.y = y_df;
 	this.dy = dy_df;
 	this.speed = speed_df;
@@ -12,7 +17,7 @@ function paddle(element_id, y_df, dy_df, speed_df, height_df, score_df) {
 }
 
 function paddleSet(paddle_settings) {
-	this.height = paddle_settings[0].value;
+	this.height = convertInput(paddle_settings[0].value, this.height_df);
 	// paddle1_settings = document.getElementsByName("paddle1_settings");
 	// paddle_height = paddle1_settings[0].value;
 
@@ -55,6 +60,10 @@ function ballConstructor(spawn_x_df, spawn_y_df, dx_df, dy_df, inc_df) {
 
 //Creates the ball
 var ball = new ballConstructor(247, 247, 0.8, 1.1, 0.0000000000001);
+console.log(ball.x - 10);
+console.log(ball.y - 10);
+console.log(ball.dx - 10);
+console.log(ball.dy - 10);
 
 var ball_miss; //counts how many times the ball has been missed by a particular player
 
@@ -107,14 +116,12 @@ function newGame() {
 	if(new_name == true) {
 		playerName();
 	}
-	else {}
 	gameTick();
 }
 
 function gameTick() {
 	ball.x += ball.dx;
 	//Why is ball.dx initially null? Why does ball.x go 247 to 2471e-13.
-	console.log(ball.x+","+ball.y+","+ball.dx+","+ball.dy+"\n");
 	ball.y += ball.dy;
 	//makes sure paddle doesn't go off screen
 	p1.y = Math.min(Math.max(p1.y + p1.dy, 0), 460);
