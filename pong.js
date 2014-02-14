@@ -18,8 +18,10 @@ function paddle(element_id, y_df, dy_df, speed_df, height_df, score_df, scorebox
 	this.namebox = document.getElementById(namebox_id);
 }
 
-function paddleSet(paddle_settings[]) {
-	this.height = convertInput(paddle_settings[0].value, this.height_df);
+function paddleSet(paddle_settings) {
+	if(typeof paddle_settings[0] != "undefined") {
+		this.height = convertInput(paddle_settings[0].value, this.height_df);
+	}
 	// paddle1_settings = document.getElementsByName("paddle1_settings");
 	// paddle_height = paddle1_settings[0].value;
 
@@ -36,7 +38,7 @@ function paddleSet(paddle_settings[]) {
 }
 
 //Creates paddles
-var p1 = new paddle("paddle1", 230, 0, 2.0, 40, 1, "player1-score", "player1-name");
+var p1 = new paddle("paddle1", 230, 0, 2.0, 40, 0, "player1-score", "player1-name");
 var p2 = new paddle("paddle2", 230, 0, 2.0, 40, 0, "player2-score", "player2-name");
 
 //Constructor for Ball Object
@@ -109,7 +111,6 @@ function updateScore() {
 		p2.scorebox.innerHTML = "<highlight>"+p2.score+"</highlight>";
 		return;
 	}
-
 }
 
 function convertInput(input, default_val) {
@@ -124,7 +125,7 @@ function convertInput(input, default_val) {
 
 function newGame() {
 	new_name = basic_settings[0].checked;
-	advanced = 
+	advanced = basic_settings[-1].checked;
 	//gets input from form
 	ball_settings = document.getElementsByName("ball_settings");
 	ball.dx = ball_settings[0].value;
@@ -139,7 +140,6 @@ function newGame() {
 	else {
 		p2.set(document.getElementsByName("paddle1_settings"));
 	}
-
 	if(new_name == true) {
 		playerName();
 	}
