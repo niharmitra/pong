@@ -1,5 +1,5 @@
 //Constructor for paddles
-function paddle(element_id, y_df, dy_df, speed_df, height_df, score_df) {
+function paddle(element_id, y_df, dy_df, speed_df, height_df, score_df, scorebox_id, namebox_id) {
 	this.style = document.getElementById(element_id).style;
 
 	this.y_df = y_df;
@@ -14,9 +14,11 @@ function paddle(element_id, y_df, dy_df, speed_df, height_df, score_df) {
 
 	this.set = paddleSet;
 	this.score = score_df;
+	this.scorebox = document.getElementById(scorebox_id);
+	this.namebox = document.getElementById(namebox_id);
 }
 
-function paddleSet(paddle_settings) {
+function paddleSet(paddle_settings[]) {
 	this.height = convertInput(paddle_settings[0].value, this.height_df);
 	// paddle1_settings = document.getElementsByName("paddle1_settings");
 	// paddle_height = paddle1_settings[0].value;
@@ -34,8 +36,8 @@ function paddleSet(paddle_settings) {
 }
 
 //Creates paddles
-var p1 = new paddle("paddle1", 230, 0, 2.0, 40, 0);
-var p2 = new paddle("paddle2", 230, 0, 2.0, 40, 0);
+var p1 = new paddle("paddle1", 230, 0, 2.0, 40, 1, "player1-score", "player1-name");
+var p2 = new paddle("paddle2", 230, 0, 2.0, 40, 0, "player2-score", "player2-name");
 
 //Constructor for Ball Object
 function ballConstructor(spawn_x_df, spawn_y_df, dx_df, dy_df, inc_df) {
@@ -82,12 +84,32 @@ function playerName() {
 	while(!player1_name) {
 		player1_name = prompt("What is player 1's name?");
 	}
-	document.getElementById("player1-name").innerHTML = player1_name+":";
+	p1.namebox.innerHTML = player1_name+":";
 	
 	while(!player2_name) {
 		player2_name = prompt("What is player 2's name?");
 	}
-	document.getElementById("player2-name").innerHTML = player2_name+":";
+	p2.namebox.innerHTML = player2_name+":";
+}
+
+function updateScore() {
+	if(p1.score==p2.score) {
+		p1.scorebox.innerHTML = p1.score;
+		p2.scorebox.innerHTML = p2.score;
+		return;
+	}
+	var winning = p1.score>p2.score?true:false;
+	if(winning) {
+		p1.scorebox.innerHTML = "<highlight>"+p1.score+"</highlight>";
+		p2.scorebox.innerHTML = p2.score;
+		return;
+	}
+	else {
+		p1.scorebox.innerHTML = p1.score;
+		p2.scorebox.innerHTML = "<highlight>"+p2.score+"</highlight>";
+		return;
+	}
+
 }
 
 function convertInput(input, default_val) {
@@ -100,25 +122,35 @@ function convertInput(input, default_val) {
 	}
 }
 
-
 function newGame() {
+	new_name = basic_settings[0].checked;
+	advanced = 
 	//gets input from form
 	ball_settings = document.getElementsByName("ball_settings");
 	ball.dx = ball_settings[0].value;
 
 	basic_settings = document.getElementsByName("basic_settings");
 
-	new_name = basic_settings[0].checked;
+	//set paddle settings
+	p1.set(document.getElementsByName("paddle1_settings"));
+	if(advanced) {
+		p2.set(document.getElementsByName("paddle2_settings"));
+	}
+	else {
+		p2.set(document.getElementsByName("paddle1_settings"));
+	}
+
 	if(new_name == true) {
 		playerName();
 	}
+	updateScore();
 	gameTick();
 }
-
+var stop;
 function gameTick() {
-	var stop = false;
+	stop = false;
 	if(!stop) {
-	console.log(ball.x);	
+	console.log(ball.x);
 	}
 	ball.x += ball.dx;
 	//Why is ball.dx initially null? Why does ball.x go 247 to 2471e-13.
@@ -150,18 +182,18 @@ function gameTick() {
 	//if ball goes out of bounds, gives pts and respawns
 	else if(ball.x > 490) {
  		p1.score += 1;
+ 		updateScore(0);
 		//makes the serve distance longer, randomizes spawn
  		ball.x = ball.spawn_x-offset;
  		ball.y = ball.spawn_y;
-		document.getElementById("player1-score").innerHTML = p1.score;
 		p2.misses +=1;
 	}
  	else if(ball.x < 10) {
     	p2.score += 1;
+    	updateScore();
 		//makes the serve distance longer
 		ball.x = ball.spawn_x+offset;
 		ball.y = ball.spawn_y;
-		document.getElementById("player2-score").innerHTML = p2.score;
 		p1.misses += 1;
 	}
 
