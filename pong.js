@@ -60,10 +60,6 @@ function ballConstructor(spawn_x_df, spawn_y_df, dx_df, dy_df, inc_df) {
 
 //Creates the ball
 var ball = new ballConstructor(247, 247, 0.8, 1.1, 0.0000000000001);
-console.log(ball.x - 10);
-console.log(ball.y - 10);
-console.log(ball.dx - 10);
-console.log(ball.dy - 10);
 
 var ball_miss; //counts how many times the ball has been missed by a particular player
 
@@ -120,6 +116,10 @@ function newGame() {
 }
 
 function gameTick() {
+	var stop = false;
+	if(!stop) {
+	console.log(ball.x);	
+	}
 	ball.x += ball.dx;
 	//Why is ball.dx initially null? Why does ball.x go 247 to 2471e-13.
 	ball.y += ball.dy;
@@ -171,7 +171,7 @@ function gameTick() {
 	else {
 		ball.dx+=ball.inc;
 	}
-	setTimeout('gameTick()', 10);
+	setTimeout('gameTick()', 1000);
 }
 
 playerName();
