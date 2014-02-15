@@ -64,10 +64,10 @@ function ballConstructor(spawn_x_df, spawn_y_df, dx_df, dy_df, inc_df) {
 
 //Creates the ball
 var ball = new ballConstructor(247, 247, 0.8, 1.1, 0.0000000000001);
-
 var ball_miss; //counts how many times the ball has been missed by a particular player
 
 //Settings Declared
+var basic_settings;
 var ball_settings;
 var paddle1_settings;
 var paddle2_settings;
@@ -94,6 +94,21 @@ function playerName() {
 	p2.namebox.innerHTML = player2_name+":";
 }
 
+//General Event Handlers: Clears default value if clicked
+
+
+//shows advanced settings
+function showAdvanced() {
+	advanced = !advanced;
+	if(advanced) {
+		document.getElementById("paddle_length").innerHTML = "Paddle 1 Length:";
+		document.createElement("input");
+	}
+	else {
+		document.getElementById("paddle_length").innerHTML = "Paddle Length:";
+	}
+}
+
 function updateScore() {
 	if(p1.score==p2.score) {
 		p1.scorebox.innerHTML = p1.score;
@@ -114,7 +129,7 @@ function updateScore() {
 }
 
 function convertInput(input, default_val) {
-	input = parseInt(input);
+	input = parseFloat(input);
 	if(input == NaN) {
 		return default_val;
 	}
@@ -123,17 +138,33 @@ function convertInput(input, default_val) {
 	}
 }
 
-function newGame() {
-	new_name = basic_settings[0].checked;
-	advanced = basic_settings[-1].checked;
-	//gets input from form
+function resetSettings() {
 	ball_settings = document.getElementsByName("ball_settings");
-	ball.dx = ball_settings[0].value;
-
+	paddle1_settings = document.getElementsByName("paddle1_settings");
 	basic_settings = document.getElementsByName("basic_settings");
 
+	basic_settings[0].checked = "unchecked";
+	ball_settings[0].value = 0.8;
+	paddle1_settings[0].value = 40;
+}
+
+function newGame() {
+	//settings from form
+	ball_settings = document.getElementsByName("ball_settings");
+	paddle1_settings = document.getElementsByName("paddle1_settings");
+	basic_settings = document.getElementsByName("basic_settings");
+	
+	new_name = basic_settings[0].checked;
+	advanced = basic_settings[basic_settings.length-1].checked;
+	//TODO Verify input some more (empty input, etc)
+	//resets ball
+	ball = new ballConstructor(247, 247, 0.8, 1.1, 0.0000000000001);
+
+	//gets input from form
+	ball.dx = convertInput(ball_settings[0].value, ball.dx_df);
+	
 	//set paddle settings
-	p1.set(document.getElementsByName("paddle1_settings"));
+	p1.set(paddle1_settings);
 	if(advanced) {
 		p2.set(document.getElementsByName("paddle2_settings"));
 	}
@@ -146,24 +177,17 @@ function newGame() {
 	updateScore();
 	gameTick();
 }
-var stop;
+
 function gameTick() {
-	stop = false;
-	if(!stop) {
-	console.log(ball.x);
-	}
-	ball.x += ball.dx;
+	ball.x += parseFloat(ball.dx);
 	//Why is ball.dx initially null? Why does ball.x go 247 to 2471e-13.
-	ball.y += ball.dy;
+	ball.y += parseFloat(ball.dy);
 	//makes sure paddle doesn't go off screen
 	p1.y = Math.min(Math.max(p1.y + p1.dy, 0), 460);
 	p2.y = Math.min(Math.max(p2.y + p2.dy, 0), 460);
 	
 	p1.style.top=p1.y;
 	p2.style.top=p2.y;
-
-	ball.style.top = ball.y;
-	ball.style.left = ball.x;
 	
 	var offset = Math.floor(Math.random()*50);
 
@@ -203,7 +227,11 @@ function gameTick() {
 	else {
 		ball.dx+=ball.inc;
 	}
-	setTimeout('gameTick()', 1000);
+
+	ball.style.top = ball.y;
+	ball.style.left = ball.x;
+	
+	setTimeout('gameTick()', 1);
 }
 
 playerName();
@@ -212,22 +240,22 @@ newGame();
 //changes paddle speeds according to key presses
 document.onkeydown = function(e) {
 	if(e.keyCode == 83) {
-		p1.dy = p1.paddle_speed;
+		p1.dy = parseFloat(p1.speed);
     }
     if(e.keyCode == 87) {
-		p1.dy = -p1.paddle_speed;
+		p1.dy = parseFloat(-p1.speed);
     }
 	if(e.keyCode == 40) {
 		//stops scrolling of page
 		e.preventDefault();
-		p2.dy = p2.paddle_speed;
+		p2.dy = parseFloat(p2.speed);
     }
     if(e.keyCode == 38) {
 		//stops scrolling of page
 		e.preventDefault();
-		p2.dy = -p2.paddle_speed;
+		p2.dy = parseFloat(-p2.speed);
     }
-	return true;
+	return;
 }
 
 document.onkeyup = function(e) {
@@ -243,5 +271,5 @@ document.onkeyup = function(e) {
     if(e.keyCode == 38) {
 		p2.dy = 0;
     }
-	return true;
+	return;
 }
