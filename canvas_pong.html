@@ -15,7 +15,7 @@
 		</ul>
 		<!--SIDEBAR END-->
 		<!--Game Elements Are Defined-->
-		<div id="gameinfo" style="width:500px;">
+		<div id="game_info" style="width:500px;">
 			<span style="float:left;">
 				<span id="player1-name">Player 1:</span><span id="player1-score">0</span>
 			</span>
@@ -23,28 +23,23 @@
 				<span id="player2-name">Player 2:</span><span id="player2-score">0</span>
 			</span>
 		</div>
-		<div>
-			<div id="gamearea" style="float:left;">
-				<div id="ball"></div>
-				<div id="paddle1"></div>
-				<div id="paddle2"></div>
-			</div>
-			<div style="float:left; margin:20px;">
-				<h3>This is Pong!<br />
-					You play using W/S or the Up/Down arrow keys.
-				</h3>
-				<content>Here you can change settings. Hover over them to find out more.</content>
-				<form id="basic_settings">
-				<span title="Do you want new player names?">New Names: </span><input name="basic_settings" type="checkbox"/><br />
-				<span title="How fast the ball moves horizontally">Ball Speed: </span><input type="text" name="ball_settings" placeholder="Ball Speed" value="0.8" /><br />
-				<span title='How long the paddle is' id="paddle_length">Paddle Length:</span><input type="text" name="paddle1_settings" placeholder="Paddle Length" value="40" /><br />
-				<button type="button" class="link-button" onclick="showAdvanced();">Show advanced settings...</button>
-				<button type="button" onclick="resetSettings();">Reset Default Settings</button><br />
-				<input type="submit" id="settings_submit" value="New Game!" onclick="newGame();"/>
-				</form>
-			</div>
+
+		<canvas id="game_area" width="550px; height=500px;"></canvas>
+		
+		<div style="float:right; margin:20px;">
+			<h3>This is Pong!<br />
+				You play using W/S or the Up/Down arrow keys.
+			</h3>
+			<content>Here you can change settings. Hover over them to find out more.</content>
+			<form id="basic_settings">
+			<span title="Do you want new player names?">New Names: </span><input name="basic_settings" type="checkbox"/><br />
+			<span title="How fast the ball moves horizontally">Ball Speed: </span><input type="text" name="ball_settings" placeholder="Ball Speed" value="0.8" /><br />
+			<span title='How long the paddle is' id="paddle_length">Paddle Length:</span><input type="text" name="paddle1_settings" placeholder="Paddle Length" value="40" /><br />
+			<button type="button" class="link-button" onclick="showAdvanced();">Show advanced settings...</button>
+			<button type="button" onclick="resetSettings();">Reset Default Settings</button><br />
+			<input type="submit" id="settings_submit" value="New Game!" onclick="newGame();"/>
+			</form>
 		</div>
-		<script type="text/javascript" src="pong.js"></script>
 		<!--COPYRIGHT AND PRIVACY POLICY-->
 		<footer>
 		<br /><br /><br /><br /><br /><br /><br /><br /><br />
@@ -53,5 +48,6 @@
 			<p>Unauthorized use and/or duplication of this material without express and <highlight>written</highlight> permission from Nihar Mitra is strictly prohibited. Links may be used, provided that full and clear credit is given to Nihar Mitra with appropriate and specific direction to my original content. This code is licensed, not sold, so please don't copy it without asking.</p>
 			<a href="#">Privacy Policy</a>
 		</footer>
+		<script type="text/javascript" src="pong.js"></script>
 	</body>
 </html>
