@@ -95,7 +95,10 @@ function playerName() {
 }
 
 //General Event Handlers: Clears default value if clicked
-
+var text_boxes = document.querySelectorAll("input[type=text]");
+for(var i=0; i<text_boxes.length; i++) {
+	//	text_boxes[i].value="";
+}
 
 //shows advanced settings
 function showAdvanced() {
@@ -143,7 +146,7 @@ function resetSettings() {
 	paddle1_settings = document.getElementsByName("paddle1_settings");
 	basic_settings = document.getElementsByName("basic_settings");
 
-	basic_settings[0].checked = "unchecked";
+	basic_settings[0].checked = false;
 	ball_settings[0].value = 0.8;
 	paddle1_settings[0].value = 40;
 }
@@ -176,6 +179,8 @@ function newGame() {
 	}
 	updateScore();
 	gameTick();
+
+	return false;
 }
 
 function gameTick() {
