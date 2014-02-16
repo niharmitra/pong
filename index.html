@@ -3,6 +3,7 @@
 	  <title>Pong</title>
 	  <link rel="stylesheet" type="text/css" href="pong.css" />
 	  <link rel="stylesheet" href="http://niharmitra.github.io/CSS/light.css" type="text/css" />
+	  <script src="http://niharmitra.github.io/JavaScript/analytics.js"></script>
 	</head>
 	<body>
 		<h1>Nihar Mitra | Pong</h1>
@@ -40,7 +41,7 @@
 				<span title="How fast the ball moves horizontally">Ball Speed: </span><input type="text" name="ball_settings" placeholder="Ball Speed" value="0.8" /><br />
 				<span title='How long the paddle is' id="paddle_length">Paddle Length:</span><input type="text" name="paddle1_settings" placeholder="Paddle Length" value="40" /><br />
 				<button type="button" class="link-button" onclick="showAdvanced();">Show advanced settings...</button>
-				<button type="button" onclick="resetSettings();">Reset to Default Settings</button><br />
+				<button type="button" onclick="resetSettings();">Reset Default Settings</button><br />
 				<input type="submit" id="settings_submit" value="New Game!" onclick="newGame();"/>
 				</form>
 			</div>

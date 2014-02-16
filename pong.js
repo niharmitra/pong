@@ -97,7 +97,11 @@ function playerName() {
 //General Event Handlers: Clears default value if clicked
 var text_boxes = document.querySelectorAll("input[type=text]");
 for(var i=0; i<text_boxes.length; i++) {
-	//	text_boxes[i].value="";
+	text_boxes[i].onclick = function() {
+		if(typeof text_boxes[i] !="undefined") {
+			text_boxes[i].value="";
+		}
+	}
 }
 
 //shows advanced settings
