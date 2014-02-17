@@ -10,7 +10,7 @@ TABLE OF CONTENTS:
 */
 
 //Constructor for paddles
-function Paddle(y, speed, width, height, score_df, scorebox_id, namebox_id) {
+function Paddle(speed, width, height, score_df, scorebox_id, namebox_id) {
 	//default values (by me)
 	this.x_df = 0;
 	this.y_df = 0;
@@ -19,7 +19,8 @@ function Paddle(y, speed, width, height, score_df, scorebox_id, namebox_id) {
 	this.width_df = 7;
 
 	//values set by user if changed
-	this.y = y;
+	this.y = (cvs.height-height)/2;
+	console.log(this.y);
 	this.dy = 0;
 	this.speed = speed;
 	this.height = height;
@@ -51,8 +52,7 @@ function paddleSet(paddle_settings) {
 }
 
 //Creates paddles
-var p1 = new Paddle(230, 2.0, 7, 40, 0, "player1-score", "player1-name");
-var p2 = new Paddle(230, 2.0, 7, 40, 0, "player2-score", "player2-name");
+
 
 //Constructor for Ball Object
 function BallConstructor(spawn_x, spawn_y, dx, dy, width, height, inc) {
@@ -78,24 +78,28 @@ function BallConstructor(spawn_x, spawn_y, dx, dy, width, height, inc) {
 	this.inc = parseFloat(inc);
 }
 
-//Creates the ball
-var ball = new BallConstructor(247, 247, 0.8, 1.1, 10, 10, 0.0000000000001);
 
-var ball_miss; //counts how many times the ball has been missed by a particular player
 
 //GLOBAL VARIABLES
-var basic_settings;
-var ball_settings;
-var paddle1_settings;
-var paddle2_settings;
+var basic_settings,
+	ball_settings,
+	paddle1_settings,
+	paddle2_settings;
 var new_name;
 var advanced = false; //advanced settings or not
 var paused = false;
+var then, now, delta;
 
+var game_speed=10;
 
 //CANVAS ELEMENTS
 var cvs = document.getElementById("game_area");
 var ctx = cvs.getContext("2d");
+//Creates paddles
+var p1 = new Paddle(2.0, 7, 40, 0, "player1-score", "player1-name");
+var p2 = new Paddle(2.0, 7, 40, 0, "player2-score", "player2-name");
+//Creates the ball
+var ball = new BallConstructor(cvs.height/2, cvs.width/2, 0.8, 1.1, 10, 10, 0.0000000000001);
 /*
 p1 = Paddle 1, p2 = paddle 2
 _x and _y mean x or y position of that element
@@ -125,6 +129,7 @@ for(var i=0; i<text_boxes.length; i++) {
 	text_boxes[i].onclick = function() {
 		if(typeof this!="undefined") {
 			this.value="";
+			console.log("Erased box");
 		}
 	};
 }
@@ -140,7 +145,7 @@ function newGame() {
 	advanced = basic_settings[basic_settings.length-1].checked;
 	//TODO Verify input some more (empty input, etc)
 	//resets ball
-	ball = new BallConstructor(247, 247, 0.8, 1.1, 10, 10, 0.0000000000001);
+	ball = new BallConstructor(cvs.height/2, cvs.width/2, 0.8, 1.1, 10, 10, 0.0000000000001);
 
 	//gets input from form
 	ball.dx = convertInput(ball_settings[0].value, ball.dx_df);
@@ -157,6 +162,7 @@ function newGame() {
 		playerName();
 	}
 	updateScore();
+	then = new Date().getTime();
 	gameTick();
 	return false;
 }
@@ -232,16 +238,19 @@ function gameTick() {
 	p1.y = Math.min(Math.max(p1.y+p1.dy, p1.height), cvs.height);
 	p2.y = Math.min(Math.max(p2.y+p2.dy, p2.height), cvs.height);
 	
+	now = new Date().getTime();
+	delta = (now - then)/1000;
 	collisionHandler();
-	
+	then = now;
 	if(ball.dx<0){
 		ball.dx-=ball.inc;
 	}
 	else {
 		ball.dx+=ball.inc;
 	}
+
 	paint();
-	if(!paused){setTimeout('gameTick()', 1);}
+	if(!paused){setTimeout('gameTick()', game_speed+delta);}
 	else {return;}
 }
 
@@ -267,7 +276,7 @@ function paint() {
 }
 
 function collisionHandler() {
-	//TODO
+	//TO IMPROVE
 	var offset = Math.floor(Math.random()*cvs.width/10);
 	
 	//bounces the ball off the paddle or wall
