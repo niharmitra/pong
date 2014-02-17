@@ -89,8 +89,6 @@ var advanced = false; //advanced settings or not
 //CANVAS ELEMENTS
 var cvs = document.getElementById("game_area");
 var ctx = cvs.getContext("2d");
-ctx.fillStyle = "white";
-
 /*
 p1 = Paddle 1, p2 = paddle 2
 _x and _y mean x or y position of that element
@@ -260,7 +258,11 @@ function gameTick() {
 function paint() {
 	var width = cvs.width;
 	var height = cvs.height;
+	//draws background
+	ctx.fillStyle = "black";
+	ctx.fillRect(0, 0, width, height);
 
+	ctx.fillStyle = "white";
 	//draws paddles
 	//subtracts .y from height b/c origin is upper left corner
 	ctx.fillRect(10, height-p1.y, p1.width, 40);
@@ -268,9 +270,9 @@ function paint() {
 	
 	//draws ball
 	//compensates for ball.x and ball.y being from the center of the ball
-	ctx.fillRect( (ball.width)/2-ball.x, height-ball.y+(ball.height/2), ball.width, ball.height);
+	ctx.fillRect((ball.width)/2-ball.x, height-ball.y+(ball.height/2), ball.width, ball.height);
 }
-
+paint();
 playerName();
 newGame();
 
@@ -278,20 +280,20 @@ newGame();
 //changes paddle speeds according to key presses
 document.onkeydown = function(e) {
 	if(e.keyCode == 83) {
-		p1.dy = parseFloat(p1.speed);
+		p1.dy = parseFloat(-p1.speed);
     }
     if(e.keyCode == 87) {
-		p1.dy = parseFloat(-p1.speed);
+		p1.dy = parseFloat(p1.speed);
     }
 	if(e.keyCode == 40) {
 		//stops scrolling of page
 		e.preventDefault();
-		p2.dy = parseFloat(p2.speed);
+		p2.dy = parseFloat(-p2.speed);
     }
     if(e.keyCode == 38) {
 		//stops scrolling of page
 		e.preventDefault();
-		p2.dy = parseFloat(-p2.speed);
+		p2.dy = parseFloat(p2.speed);
     }
 	return;
 }
