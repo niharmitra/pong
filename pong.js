@@ -120,12 +120,13 @@ function playerName() {
 
 //General Event Handlers: Clears default value if clicked
 var text_boxes = document.querySelectorAll("input[type=text]");
+
 for(var i=0; i<text_boxes.length; i++) {
 	text_boxes[i].onclick = function() {
-		if(typeof text_boxes[i]!="undefined") {
-			text_boxes[i].value="";
+		if(typeof this!="undefined") {
+			this.value="";
 		}
-	}
+	};
 }
 
 //SETTING UP A NEW GAME:
@@ -255,8 +256,8 @@ function paint() {
 	ctx.fillStyle = "white";
 	//draws paddles
 	//subtracts .y from height b/c origin is upper left corner
-	ctx.fillRect(10, height-p1.y, p1.width, 40);
-	ctx.fillRect(width-10, height-p2.y, p2.width, 40);
+	ctx.fillRect(p1.width, height-p1.y, p1.width, 40);
+	ctx.fillRect(width-2*p2.width, height-p2.y, p2.width, 40);
 
 	//draws ball
 	//compensates for ball.x and ball.y being from the center of the ball
@@ -270,7 +271,7 @@ function collisionHandler() {
 	var offset = Math.floor(Math.random()*cvs.width/10);
 	
 	//bounces the ball off the paddle or wall
-	if (ball.y > cvs.height || ball.y <= 1) {
+	if (ball.y >=cvs.height || ball.y <= 1) {
 		ball.dy *= -1;
 	}
 	if (ball.x >= cvs.width-p2.width && ball.y >= p2.y && ball.y <= p2.y+p2.height) {
