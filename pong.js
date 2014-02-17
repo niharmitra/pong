@@ -23,7 +23,7 @@ function Paddle(y, speed, width, height, score_df, scorebox_id, namebox_id) {
 	this.dy = 0;
 	this.speed = speed;
 	this.height = height;
-	this.width = width
+	this.width = width;
 
 	this.set = paddleSet;
 	this.score = score_df;
@@ -71,8 +71,8 @@ function BallConstructor(spawn_x, spawn_y, dx, dy, width, height, inc) {
 
 	this.width_df = 10;
 	this.height_df = 10;
-	this.width = width;
-	this.height = height;
+	this.width = parseFloat(width);
+	this.height = parseFloat(height);
 
 	this.inc_df = 0.0000000000001;
 	this.inc = parseFloat(inc);
@@ -80,6 +80,7 @@ function BallConstructor(spawn_x, spawn_y, dx, dy, width, height, inc) {
 
 //Creates the ball
 var ball = new BallConstructor(247, 247, 0.8, 1.1, 10, 10, 0.0000000000001);
+
 var ball_miss; //counts how many times the ball has been missed by a particular player
 
 //GLOBAL VARIABLES
@@ -106,11 +107,13 @@ function playerName() {
 	var player2_name = null;
 	while(!player1_name) {
 		player1_name = prompt("What is player 1's name?");
+		if(player1_name.length > 25) {alert("Sorry, your name was too long");player1_name=null;}
 	}
 	p1.namebox.innerHTML = player1_name+":";
 	
 	while(!player2_name) {
 		player2_name = prompt("What is player 2's name?");
+		if(player2_name.length > 25) {alert("Sorry, your name was too long");player2_name=null;}
 	}
 	p2.namebox.innerHTML = player2_name+":";
 }
@@ -136,7 +139,7 @@ function newGame() {
 	advanced = basic_settings[basic_settings.length-1].checked;
 	//TODO Verify input some more (empty input, etc)
 	//resets ball
-	ball = new ballConstructor(247, 247, 0.8, 1.1, 0.0000000000001);
+	ball = new BallConstructor(247, 247, 0.8, 1.1, 10, 10, 0.0000000000001);
 
 	//gets input from form
 	ball.dx = convertInput(ball_settings[0].value, ball.dx_df);
@@ -154,7 +157,6 @@ function newGame() {
 	}
 	updateScore();
 	gameTick();
-
 	return false;
 }
 //SETTINGS:
@@ -200,6 +202,7 @@ function resetSettings() {
 	ball_settings[0].value = 0.8;
 	paddle1_settings[0].value = 40;
 }
+
 function updateScore() {
 	if(p1.score==p2.score) {
 		p1.scorebox.innerHTML = p1.score;
@@ -225,48 +228,17 @@ function gameTick() {
 	//Why is ball.dx initially null? Why does ball.x go 247 to 2471e-13.
 	ball.y += parseFloat(ball.dy);
 	//makes sure paddle doesn't go off screen
-	p1.y = Math.min(Math.max(p1.y + p1.dy, p1.height), cvs.height);
-	p2.y = Math.min(Math.max(p2.y + p2.dy, p2.height), cvs.height);
+	p1.y = Math.min(Math.max(p1.y+p1.dy, p1.height), cvs.height);
+	p2.y = Math.min(Math.max(p2.y+p2.dy, p2.height), cvs.height);
 	
-	var offset = Math.floor(Math.random()*50);
-
-	//bounces the ball off the paddle or wall
-	if (ball.y > 489 || ball.y < 1) {
-		ball.dy *= -1;
-	}
-	else if (ball.x >= 472 && ball.y >= p2.y && ball.y <= p2.y + p2.height) {
-		ball.dx *= -1;
-		p2.misses = 0;
-	}
-	else if (ball.x <= 16 && ball.y >= p1.y && ball.y <= p1.y + p1.height) {
-		ball.dx *= -1;
-		p1.misses = 0;
-	}
-	//if ball goes out of bounds, gives pts and respawns
-	else if(ball.x > 490) {
- 		p1.score += 1;
- 		updateScore(0);
-		//makes the serve distance longer, randomizes spawn
- 		ball.x = ball.spawn_x-offset;
- 		ball.y = ball.spawn_y;
-		p2.misses +=1;
-	}
- 	else if(ball.x < 10) {
-    	p2.score += 1;
-    	updateScore();
-		//makes the serve distance longer
-		ball.x = ball.spawn_x+offset;
-		ball.y = ball.spawn_y;
-		p1.misses += 1;
-	}
-
+	collisionHandler();
+	
 	if(ball.dx<0){
 		ball.dx-=ball.inc;
 	}
 	else {
 		ball.dx+=ball.inc;
 	}
-
 	paint();
 	if(!paused){setTimeout('gameTick()', 1);}
 	else {return;}
@@ -285,16 +257,47 @@ function paint() {
 	//subtracts .y from height b/c origin is upper left corner
 	ctx.fillRect(10, height-p1.y, p1.width, 40);
 	ctx.fillRect(width-10, height-p2.y, p2.width, 40);
-	
+
 	//draws ball
 	//compensates for ball.x and ball.y being from the center of the ball
-	console.log(ball.height);
-	console.log(ball.width);
-	ctx.fillRect(ball.width/2-ball.x, height-ball.y+(ball.height/2), ball.width, ball.height);
+	//console.log(ball.height);
+	//console.log(ball.width);
+	ctx.fillRect(ball.x-(ball.width/2), height-ball.y+(ball.height/2), ball.width, ball.height);
 }
 
 function collisionHandler() {
-	//TODO	
+	//TODO
+	var offset = Math.floor(Math.random()*cvs.width/10);
+	
+	//bounces the ball off the paddle or wall
+	if (ball.y > cvs.height || ball.y <= 1) {
+		ball.dy *= -1;
+	}
+	if (ball.x >= cvs.width-p2.width && ball.y >= p2.y && ball.y <= p2.y+p2.height) {
+		ball.dx *= -1;
+		p2.misses = 0;
+	}
+	if (ball.x <= p1.width && ball.y >= p1.y && ball.y <= p1.y+p1.height) {
+		ball.dx *= -1;
+		p1.misses = 0;
+	}
+	//if ball goes out of bounds, gives pts and respawns
+	else if(ball.x > cvs.width) {
+ 		p1.score += 1;
+ 		updateScore();
+		//makes the serve distance longer, randomizes spawn
+ 		ball.x = ball.spawn_x-offset;
+ 		ball.y = ball.spawn_y;
+		p2.misses +=1;
+	}
+ 	else if(ball.x < 1) {
+    	p2.score += 1;
+    	updateScore();
+		//makes the serve distance longer
+		ball.x = ball.spawn_x+offset;
+		ball.y = ball.spawn_y;
+		p1.misses += 1;
+	}
 }
 
 //STARTS GAME
