@@ -10,7 +10,7 @@ TABLE OF CONTENTS:
 */
 
 //Constructor for paddles
-function paddle(y, speed, width, height, score_df, scorebox_id, namebox_id) {
+function Paddle(y, speed, width, height, score_df, scorebox_id, namebox_id) {
 	//default values (by me)
 	this.x_df = 0;
 	this.y_df = 0;
@@ -51,11 +51,11 @@ function paddleSet(paddle_settings) {
 }
 
 //Creates paddles
-var p1 = new paddle(230, 2.0, 7, 40, 0, "player1-score", "player1-name");
-var p2 = new paddle(230, 2.0, 7, 40, 0, "player2-score", "player2-name");
+var p1 = new Paddle(230, 2.0, 7, 40, 0, "player1-score", "player1-name");
+var p2 = new Paddle(230, 2.0, 7, 40, 0, "player2-score", "player2-name");
 
 //Constructor for Ball Object
-function ballConstructor(spawn_x, spawn_y, dx, dy, width, height, inc) {
+function BallConstructor(spawn_x, spawn_y, dx, dy, width, height, inc) {
 	this.spawn_x_df = 247;
 	this.spawn_y_df = 247;
 	this.spawn_x = parseFloat(spawn_x);
@@ -79,7 +79,7 @@ function ballConstructor(spawn_x, spawn_y, dx, dy, width, height, inc) {
 }
 
 //Creates the ball
-var ball = new ballConstructor(247, 247, 0.8, 1.1, 10, 10, 0.0000000000001);
+var ball = new BallConstructor(247, 247, 0.8, 1.1, 10, 10, 0.0000000000001);
 var ball_miss; //counts how many times the ball has been missed by a particular player
 
 //GLOBAL VARIABLES
@@ -291,6 +291,10 @@ function paint() {
 	console.log(ball.height);
 	console.log(ball.width);
 	ctx.fillRect(ball.width/2-ball.x, height-ball.y+(ball.height/2), ball.width, ball.height);
+}
+
+function collisionHandler() {
+	//TODO	
 }
 
 //STARTS GAME
