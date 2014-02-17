@@ -55,26 +55,31 @@ var p1 = new paddle(230, 2.0, 7, 40, 0, "player1-score", "player1-name");
 var p2 = new paddle(230, 2.0, 7, 40, 0, "player2-score", "player2-name");
 
 //Constructor for Ball Object
-function ballConstructor(spawn_x_df, spawn_y_df, dx_df, dy_df, inc_df) {
-	this.spawn_x_df = parseFloat(spawn_x_df);
-	this.spawn_y_df = parseFloat(spawn_y_df);
-	this.spawn_x = parseFloat(spawn_x_df);
-	this.spawn_y = parseFloat(spawn_y_df);
+function ballConstructor(spawn_x, spawn_y, dx, dy, width, height, inc) {
+	this.spawn_x_df = 247;
+	this.spawn_y_df = 247;
+	this.spawn_x = parseFloat(spawn_x);
+	this.spawn_y = parseFloat(spawn_y);
 
-	this.dx_df = parseFloat(dx_df);
-	this.dy_df = parseFloat(dy_df);
-	this.dx = parseFloat(dx_df);
-	this.dy = parseFloat(dy_df);
+	this.dx_df = 0.8;
+	this.dy_df = 1.1;
+	this.dx = parseFloat(dx);
+	this.dy = parseFloat(dy);
 
-	this.x = parseFloat(spawn_x_df);
-	this.y = parseFloat(spawn_y_df);
+	this.x = parseFloat(spawn_x);
+	this.y = parseFloat(spawn_y);
 
-	this.inc_df = parseFloat(inc_df);
-	this.inc = parseFloat(inc_df);
+	this.width_df = 10;
+	this.height_df = 10;
+	this.width = width;
+	this.height = height;
+
+	this.inc_df = 0.0000000000001;
+	this.inc = parseFloat(inc);
 }
 
 //Creates the ball
-var ball = new ballConstructor(247, 247, 0.8, 1.1, 0.0000000000001);
+var ball = new ballConstructor(247, 247, 0.8, 1.1, 10, 10, 0.0000000000001);
 var ball_miss; //counts how many times the ball has been missed by a particular player
 
 //GLOBAL VARIABLES
@@ -84,6 +89,7 @@ var paddle1_settings;
 var paddle2_settings;
 var new_name;
 var advanced = false; //advanced settings or not
+var paused = false;
 
 
 //CANVAS ELEMENTS
@@ -164,6 +170,17 @@ function showAdvanced() {
 	}
 }
 
+function pause() {
+	paused=true;
+	return;
+}
+
+function unPause() {
+	paused=false;
+	gameTick();
+	return;
+}
+
 function convertInput(input, default_val) {
 	input = parseFloat(input);
 	if(input == NaN) {
@@ -208,8 +225,8 @@ function gameTick() {
 	//Why is ball.dx initially null? Why does ball.x go 247 to 2471e-13.
 	ball.y += parseFloat(ball.dy);
 	//makes sure paddle doesn't go off screen
-	p1.y = Math.min(Math.max(p1.y + p1.dy, 0), 460);
-	p2.y = Math.min(Math.max(p2.y + p2.dy, 0), 460);
+	p1.y = Math.min(Math.max(p1.y + p1.dy, p1.height), cvs.height);
+	p2.y = Math.min(Math.max(p2.y + p2.dy, p2.height), cvs.height);
 	
 	var offset = Math.floor(Math.random()*50);
 
@@ -251,7 +268,8 @@ function gameTick() {
 	}
 
 	paint();
-	setTimeout('gameTick()', 1);
+	if(!paused){setTimeout('gameTick()', 1);}
+	else {return;}
 }
 
 //paints screen accordingly
@@ -270,8 +288,12 @@ function paint() {
 	
 	//draws ball
 	//compensates for ball.x and ball.y being from the center of the ball
-	ctx.fillRect((ball.width)/2-ball.x, height-ball.y+(ball.height/2), ball.width, ball.height);
+	console.log(ball.height);
+	console.log(ball.width);
+	ctx.fillRect(ball.width/2-ball.x, height-ball.y+(ball.height/2), ball.width, ball.height);
 }
+
+//STARTS GAME
 paint();
 playerName();
 newGame();
@@ -294,6 +316,13 @@ document.onkeydown = function(e) {
 		//stops scrolling of page
 		e.preventDefault();
 		p2.dy = parseFloat(p2.speed);
+    }
+    if(e.keyCode == 32) {
+    	e.preventDefault();
+    }
+    if(e.keyCode == 80) {
+    	if(paused){unPause();}
+    	else{pause();}
     }
 	return;
 }
