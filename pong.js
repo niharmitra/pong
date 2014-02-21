@@ -280,7 +280,7 @@ function collisionHandler() {
 	var offset = Math.floor(Math.random()*cvs.width/10);
 	
 	//bounces the ball off the paddle or wall
-	if (ball.y >=cvs.height || ball.y <= 1) {
+	if (ball.y+ball.height/2 >=cvs.height || ball.y-ball.height/2<= 1) {
 		ball.dy *= -1;
 	}
 	if (ball.x >= cvs.width-p2.width && ball.y >= p2.y && ball.y <= p2.y+p2.height) {
