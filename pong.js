@@ -36,6 +36,7 @@ function paddleSet(paddle_settings) {
 	if(typeof paddle_settings[0] != "undefined") {
 		this.height = convertInput(paddle_settings[0].value, this.height_df);
 	}
+	this.score = 0; 
 	// paddle1_settings = document.getElementsByName("paddle1_settings");
 	// paddle_height = paddle1_settings[0].value;
 
@@ -50,9 +51,6 @@ function paddleSet(paddle_settings) {
 	// p1.style.height = convertInput(paddle_height,p1.height_df);
 	// p2.style.height = convertInput(paddle2_height,p2.height_df);
 }
-
-//Creates paddles
-
 
 //Constructor for Ball Object
 function BallConstructor(spawn_x, spawn_y, dx, dy, width, height, inc) {
@@ -178,6 +176,7 @@ function showAdvanced() {
 	else {
 		document.getElementById("paddle_length").innerHTML = "Paddle Length:";
 	}
+	return false;
 }
 
 function pause() {
@@ -209,6 +208,7 @@ function resetSettings() {
 	basic_settings[0].checked = false;
 	ball_settings[0].value = 0.8;
 	paddle1_settings[0].value = 40;
+	return false;
 }
 
 function updateScore() {
