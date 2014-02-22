@@ -119,15 +119,16 @@ function playerName() {
 }
 
 //General Event Handlers: Clears default value if clicked
-var text_boxes = document.querySelectorAll("input[type=text]");
-
-for(var i=0; i<text_boxes.length; i++) {
-	text_boxes[i].onclick = function() {
-		if(typeof this!="undefined") {
-			this.value="";
-			console.log("Erased box");
-		}
-	};
+function createClickHandlers() {
+	var text_boxes = document.querySelectorAll("input[type=text]");
+	for(var i=0; i<text_boxes.length; i++) {
+		text_boxes[i].onclick = function() {
+			if(typeof this!="undefined") {
+				this.value="";
+				console.log("Erased box");
+			}
+		};
+	}
 }
 
 //SETTING UP A NEW GAME:
@@ -169,13 +170,34 @@ function newGame() {
 //HIDES/REVEALS ADVANCED SETTINGS
 function showAdvanced() {
 	advanced = !advanced;
+	var advanced_settings = document.getElementById("advanced_settings");
+
+	var p2_length = document.createElement("input");
+	p2_length.setAttribute("type", "text");
+	p2_length.setAttribute("value", "40");
+	p2_length.setAttribute("placeholder", "Paddle 2 Length");
+	p2_length.setAttribute("name", "paddle2_settings");
+	var p2_length_span = document.createElement("span");
+	p2_length_span.setAttribute("title", "How long Paddle 2 is");
+	p2_length_span.innerHTML = "Paddle 2 Length:";
+
+	var linebreak = document.createElement("br");
+
 	if(advanced) {
 		document.getElementById("paddle_length").innerHTML = "Paddle 1 Length:";
-		document.createElement("input");
+		
+		advanced_settings.appendChild(linebreak);
+		advanced_settings.appendChild(p2_length_span);
+		advanced_settings.appendChild(p2_length);
 	}
+
 	else {
 		document.getElementById("paddle_length").innerHTML = "Paddle Length:";
+		while(advanced_settings.firstChild) {
+			advanced_settings.removeChild(advanced_settings.firstChild);
+		}
 	}
+	createClickHandlers();
 	return false;
 }
 
@@ -208,6 +230,11 @@ function resetSettings() {
 	basic_settings[0].checked = false;
 	ball_settings[0].value = 0.8;
 	paddle1_settings[0].value = 40;
+
+	if(advanced) {
+		paddle2_settings = document.getElementsByName("paddle2_settings");
+		paddle2_settings[0].value = 40;
+	}
 	return false;
 }
 
@@ -251,8 +278,10 @@ function gameTick() {
 	}
 
 	paint();
-	if(!paused){setTimeout('gameTick()', game_speed+delta);}
-	else {return;}
+	if(!paused){
+		setTimeout('gameTick()', game_speed+delta);
+	}
+	else {return false;}
 }
 
 //paints screen accordingly
@@ -313,6 +342,7 @@ function collisionHandler() {
 
 //STARTS GAME
 paint();
+createClickHandlers();
 playerName();
 newGame();
 

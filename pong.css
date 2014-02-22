@@ -6,3 +6,8 @@
 #game_info {
 	width: 550px;
 }
+
+.pong-info {
+	position: absolute;
+	
+}
