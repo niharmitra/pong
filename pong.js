@@ -78,8 +78,6 @@ function BallConstructor(spawn_x, spawn_y, dx, dy, width, height, inc) {
 	this.inc = parseFloat(inc);
 }
 
-
-
 //GLOBAL VARIABLES
 var basic_settings,
 	ball_settings,
@@ -136,6 +134,9 @@ for(var i=0; i<text_boxes.length; i++) {
 
 //SETTING UP A NEW GAME:
 function newGame() {
+	if(localStorage["ball_speed"]!=null) {
+		 
+	}
 	//settings from form
 	ball_settings = document.getElementsByName("ball_settings");
 	paddle1_settings = document.getElementsByName("paddle1_settings");

@@ -36,9 +36,9 @@
 			<span title="Do you want new player names?">New Names: </span><input name="basic_settings" type="checkbox"/><br />
 			<span title="How fast the ball moves horizontally">Ball Speed: </span><input type="text" name="ball_settings" placeholder="Ball Speed" value="0.8" /><br />
 			<span title='How long the paddle is' id="paddle_length">Paddle Length:</span><input type="text" name="paddle1_settings" placeholder="Paddle Length" value="40" /><br />
-			<button type="button" class="link-button" onclick="showAdvanced();">Show advanced settings...</button>
-			<button type="button" onclick="resetSettings();">Reset Default Settings</button><br />
-			<input type="submit" id="settings_submit" value="New Game!" onclick="newGame();"/>
+			<button type="button" class="link-button" onclick="return showAdvanced();">Show advanced settings...</button>
+			<button type="button" onclick="return resetSettings();">Reset Default Settings</button><br />
+			<input type="submit" id="settings_submit" value="New Game!" onclick="return newGame();"/>
 			</form>
 		</div>
 		<!--COPYRIGHT AND PRIVACY POLICY-->
