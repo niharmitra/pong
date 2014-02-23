@@ -337,14 +337,14 @@ function collisionHandler() {
 		ball.dx *= -1;
 		p2.misses = 0;
 	}
-	//Sketchy hit on p1
-	else if() {
+	// //Sketchy hit on p1
+	// else if(false) {
 
-	}
-	//Sketchy hit on p2
-	else if() {
-		
-	}
+	// }
+	// //Sketchy hit on p2
+	// else if(false) {
+
+	// }
 	//if ball goes out of bounds, gives pts and respawns
 	else if(ball.x > cvs.width) {
  		p1.score += 1;
@@ -369,7 +369,7 @@ function collisionHandler() {
 		//makes the serve distance longer
 		ball.x = ball.spawn_x+offset;
 		ball.y = ball.spawn_y;
-
+   
 		//after 3 consecutive misses, spawns in other direction
 		if(p1.misses>=3) {
 			console.log("Wow! "+p1.name+" sucks!");
