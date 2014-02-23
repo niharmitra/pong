@@ -12,23 +12,30 @@ TABLE OF CONTENTS:
 //Constructor for paddles
 function Paddle(speed, width, height, score_df, scorebox_id, namebox_id) {
 	//default values (by me)
-	this.x_df = 0;
+	this.x_df = 5;
 	this.y_df = 0;
 	this.speed_df = 2.0;
 	this.height_df = 40;
 	this.width_df = 7;
 
+	//From upper left corner
 	//values set by user if changed
-	this.y = (cvs.height-height)/2;
-	console.log(this.y);
+	this.y = cvs.height/2;
+	this.x = cvs.width/100;
 	this.dy = 0;
 	this.speed = speed;
 	this.height = height;
 	this.width = width;
 
+	//Settings method
 	this.set = paddleSet;
-	this.score = score_df;
+
+	this.misses = 0;
+
+	this.score = score_df
 	this.scorebox = document.getElementById(scorebox_id);
+
+	this.name = new String();
 	this.namebox = document.getElementById(namebox_id);
 }
 
@@ -36,7 +43,8 @@ function paddleSet(paddle_settings) {
 	if(typeof paddle_settings[0] != "undefined") {
 		this.height = convertInput(paddle_settings[0].value, this.height_df);
 	}
-	this.score = 0; 
+	this.score = 0;
+	this.misses = 0;
 	// paddle1_settings = document.getElementsByName("paddle1_settings");
 	// paddle_height = paddle1_settings[0].value;
 
@@ -64,6 +72,7 @@ function BallConstructor(spawn_x, spawn_y, dx, dy, width, height, inc) {
 	this.dx = parseFloat(dx);
 	this.dy = parseFloat(dy);
 
+	//From upper left corner
 	this.x = parseFloat(spawn_x);
 	this.y = parseFloat(spawn_y);
 
@@ -84,7 +93,7 @@ var basic_settings,
 var new_name;
 var advanced = false; //advanced settings or not
 var paused = false;
-var then, now, delta;
+var then;
 
 var game_speed=10;
 
@@ -110,12 +119,14 @@ function playerName() {
 		if(player1_name.length > 25) {alert("Sorry, your name was too long");player1_name=null;}
 	}
 	p1.namebox.innerHTML = player1_name+":";
-	
+	p1.name = player1_name;
+
 	while(!player2_name) {
 		player2_name = prompt("What is player 2's name?");
 		if(player2_name.length > 25) {alert("Sorry, your name was too long");player2_name=null;}
 	}
 	p2.namebox.innerHTML = player2_name+":";
+	p2.name = player2_name;
 }
 
 //General Event Handlers: Clears default value if clicked
@@ -125,7 +136,6 @@ function createClickHandlers() {
 		text_boxes[i].onclick = function() {
 			if(typeof this!="undefined") {
 				this.value="";
-				console.log("Erased box");
 			}
 		};
 	}
@@ -133,30 +143,33 @@ function createClickHandlers() {
 
 //SETTING UP A NEW GAME:
 function newGame() {
-	if(localStorage["ball_speed"]!=null) {
-		 
-	}
 	//settings from form
 	ball_settings = document.getElementsByName("ball_settings");
 	paddle1_settings = document.getElementsByName("paddle1_settings");
 	basic_settings = document.getElementsByName("basic_settings");
 	
 	new_name = basic_settings[0].checked;
-	advanced = basic_settings[basic_settings.length-1].checked;
-	//TODO Verify input some more (empty input, etc)
-	//resets ball
-	ball = new BallConstructor(cvs.height/2, cvs.width/2, 0.8, 1.1, 10, 10, 0.0000000000001);
-
-	//gets input from form
-	ball.dx = convertInput(ball_settings[0].value, ball.dx_df);
 	
+	//reset ball position
+	ball.x = ball.spawn_x;
+	ball.y = ball.spawn_y;
+
 	//set paddle settings
 	p1.set(paddle1_settings);
+
 	if(advanced) {
 		p2.set(document.getElementsByName("paddle2_settings"));
+
+		ball.dx = convertInput(ball_settings[0].value, ball.dx_df);
+		ball.dy = convertInput(ball_settings[1].value, ball.dy_df);
 	}
 	else {
+		//Changes paddle 2 in the same way as paddle 1
 		p2.set(document.getElementsByName("paddle1_settings"));
+
+		//Analyzes user ball speed multiplier
+		ball.dx = convertInput(ball_settings[0].value*ball.dx_df, ball.dx_df);
+		ball.dy = convertInput(ball_settings[0].value*ball.dy_df, ball.dy_df);
 	}
 	if(new_name == true) {
 		playerName();
@@ -179,20 +192,22 @@ function showAdvanced() {
 	p2_length.setAttribute("name", "paddle2_settings");
 	var p2_length_span = document.createElement("span");
 	p2_length_span.setAttribute("title", "How long Paddle 2 is");
-	p2_length_span.innerHTML = "Paddle 2 Length:";
+	p2_length_span.innerHTML = "Paddle 2 Length: ";
+
+	//GOAL: ADVANCED BALL SETTINGS
 
 	var linebreak = document.createElement("br");
 
 	if(advanced) {
-		document.getElementById("paddle_length").innerHTML = "Paddle 1 Length:";
+		document.getElementById("paddle_length").innerHTML = "Paddle 1 Length: ";
 		
-		advanced_settings.appendChild(linebreak);
+		advanced_settings.appendChild(linebreak.cloneNode(false));
 		advanced_settings.appendChild(p2_length_span);
 		advanced_settings.appendChild(p2_length);
 	}
 
 	else {
-		document.getElementById("paddle_length").innerHTML = "Paddle Length:";
+		document.getElementById("paddle_length").innerHTML = "Paddle Length: ";
 		while(advanced_settings.firstChild) {
 			advanced_settings.removeChild(advanced_settings.firstChild);
 		}
@@ -203,11 +218,12 @@ function showAdvanced() {
 
 function pause() {
 	paused=true;
-	return;
+	return; 
 }
 
 function unPause() {
 	paused=false;
+	then = new Date().getTime();
 	gameTick();
 	return;
 }
@@ -228,12 +244,16 @@ function resetSettings() {
 	basic_settings = document.getElementsByName("basic_settings");
 
 	basic_settings[0].checked = false;
-	ball_settings[0].value = 0.8;
-	paddle1_settings[0].value = 40;
+	ball_settings[0].value = 1;
+	paddle1_settings[0].value = p1.height_df;
 
 	if(advanced) {
+		//GOAL: ADVANCED BALL SETTINGS
+		// ball_settings[0].value = ball.dx_df;
+		// ball_settings[1].value = ball.dy_df;
+
 		paddle2_settings = document.getElementsByName("paddle2_settings");
-		paddle2_settings[0].value = 40;
+		paddle2_settings[0].value = p2.height_df;
 	}
 	return false;
 }
@@ -260,24 +280,22 @@ function updateScore() {
 //RUNNING GAME
 function gameTick() {
 	ball.x += parseFloat(ball.dx);
-	//Why is ball.dx initially null? Why does ball.x go 247 to 2471e-13.
 	ball.y += parseFloat(ball.dy);
 	//makes sure paddle doesn't go off screen
 	p1.y = Math.min(Math.max(p1.y+p1.dy, p1.height), cvs.height);
 	p2.y = Math.min(Math.max(p2.y+p2.dy, p2.height), cvs.height);
 	
-	now = new Date().getTime();
-	delta = (now - then)/1000;
+	var now = new Date().getTime();
+	var delta = (now - then)/1000;
 	collisionHandler();
-	then = now;
 	if(ball.dx<0){
 		ball.dx-=ball.inc;
 	}
 	else {
 		ball.dx+=ball.inc;
 	}
-
 	paint();
+	then = now;
 	if(!paused){
 		setTimeout('gameTick()', game_speed+delta);
 	}
@@ -295,48 +313,69 @@ function paint() {
 	ctx.fillStyle = "white";
 	//draws paddles
 	//subtracts .y from height b/c origin is upper left corner
-	ctx.fillRect(p1.width, height-p1.y, p1.width, 40);
-	ctx.fillRect(width-2*p2.width, height-p2.y, p2.width, 40);
+	ctx.fillRect(p1.x, height-p1.y, p1.width, p1.height);
+	ctx.fillRect(width-2*p2.x, height-p2.y, p2.width, p2.height);
 
 	//draws ball
-	//compensates for ball.x and ball.y being from the center of the ball
-	//console.log(ball.height);
-	//console.log(ball.width);
-	ctx.fillRect(ball.x-(ball.width/2), height-ball.y+(ball.height/2), ball.width, ball.height);
+	ctx.fillRect(ball.x, height-ball.y, ball.width, ball.height);
 }
 
 function collisionHandler() {
-	//TO IMPROVE
 	var offset = Math.floor(Math.random()*cvs.width/10);
 	
 	//bounces the ball off the paddle or wall
-	if (ball.y+(ball.height/2) > cvs.height || ball.y-(ball.height/2)<0) {
+	if(ball.y > cvs.height || ball.y<0) {
 		ball.dy *= -1;
 	}
-	if (ball.x >= cvs.width-p2.width && ball.y >= p2.y && ball.y <= p2.y+p2.height) {
+	//Direct hit on p1
+	else if(ball.x <= p1.x+p1.width && ball.y <= p1.y && ball.y >= p1.y+p1.height) {
+		ball.dx *= -1;
+		p1.misses = 0;
+	}
+	//Direct hit on p2
+	else if(ball.x+ball.width>=p2.x && ball.y <= p2.y && ball.y >= p2.y+p2.height) {
 		ball.dx *= -1;
 		p2.misses = 0;
 	}
-	if (ball.x <= p1.width && ball.y >= p1.y && ball.y <= p1.y+p1.height) {
-		ball.dx *= -1;
-		p1.misses = 0;
+	//Sketchy hit on p1
+	else if() {
+
+	}
+	//Sketchy hit on p2
+	else if() {
+		
 	}
 	//if ball goes out of bounds, gives pts and respawns
 	else if(ball.x > cvs.width) {
  		p1.score += 1;
- 		updateScore();
+ 		p2.misses = parseInt(p2.misses)+1;
+		updateScore();
+
 		//makes the serve distance longer, randomizes spawn
  		ball.x = ball.spawn_x-offset;
  		ball.y = ball.spawn_y;
-		p2.misses +=1;
+
+ 		if(p2.misses>=3) {
+ 			console.log("Wow! "+p2.name+" sucks!");
+			ball.dx*=-1;
+			ball.x = ball.spawn_x+offset;
+		}
 	}
  	else if(ball.x < 1) {
     	p2.score += 1;
-    	updateScore();
+    	p1.misses = parseInt(p1.misses)+1;
+		updateScore();
+		
 		//makes the serve distance longer
 		ball.x = ball.spawn_x+offset;
 		ball.y = ball.spawn_y;
-		p1.misses += 1;
+
+		//after 3 consecutive misses, spawns in other direction
+		if(p1.misses>=3) {
+			console.log("Wow! "+p1.name+" sucks!");
+			ball.dx*=-1;
+			ball.x = ball.spawn_x-offset;
+		}
 	}
 }
 

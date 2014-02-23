@@ -1,13 +1,16 @@
 #game_area {
 	width: 550px;
 	height: 500px;
+	float: left;
 }
 
 #game_info {
 	width: 550px;
 }
 
-.pong-info {
-	position: absolute;
-	
+#pong-info {
+	position: relative;
+	padding: 2%;
+	padding-left: 5%;
+	float: right;
 }
