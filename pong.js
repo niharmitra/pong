@@ -24,7 +24,7 @@ function Paddle(speed, width, height, score_df, scorebox_id, namebox_id) {
 	this.width = width;
 
 	//From upper left corner
-	this.y = (cvs.height/2)+(this.height/2);
+	this.y = (cvs.height/2)-(this.height/2);
 	this.x = cvs.width/100;
 	//Settings method
 	this.set = paddleSet;
@@ -105,9 +105,9 @@ var p2 = new Paddle(2.0, 7, 40, 0, "player2-score", "player2-name");
 //Creates the ball
 var ball = new BallConstructor(cvs.height/2, cvs.width/2, 0.8, 1.1, 10, 10, 0.0000000000001);
 /*
-p1 = Paddle 1, p2 = paddle 2
-_x and _y mean x or y position of that element
-_dx and _dy mean acceleration of that element
+p1 = Paddle 1, p2 = paddle 2, but also refer to the players
+.x and .y mean x or y position of that element
+.dx and .dy mean acceleration of that element
 */
 
 function playerName() {
@@ -312,11 +312,11 @@ function paint() {
 	ctx.fillStyle = "white";
 	//draws paddles
 	//subtracts .y from height b/c origin is upper left corner
-	ctx.fillRect(p1.x, height-p1.y, p1.width, p1.height);
-	ctx.fillRect(width-2*p2.x, height-p2.y, p2.width, p2.height);
+	ctx.fillRect(p1.x, p1.y, p1.width, p1.height);
+	ctx.fillRect(width-2*p2.x, p2.y, p2.width, p2.height);
 
 	//draws ball
-	ctx.fillRect(ball.x, height-ball.y, ball.width, ball.height);
+	ctx.fillRect(ball.x, ball.y, ball.width, ball.height);
 }
 
 function collisionHandler() {
@@ -390,20 +390,20 @@ newGame();
 //changes paddle speeds according to key presses
 document.onkeydown = function(e) {
 	if(e.keyCode == 83) {
-		p1.dy = parseFloat(-p1.speed);
+		p1.dy = parseFloat(p1.speed);
     }
     if(e.keyCode == 87) {
-		p1.dy = parseFloat(p1.speed);
+		p1.dy = parseFloat(-p1.speed);
     }
 	if(e.keyCode == 40) {
 		//stops scrolling of page
 		e.preventDefault();
-		p2.dy = parseFloat(-p2.speed);
+		p2.dy = parseFloat(p2.speed);
     }
     if(e.keyCode == 38) {
 		//stops scrolling of page
 		e.preventDefault();
-		p2.dy = parseFloat(p2.speed);
+		p2.dy = parseFloat(-p2.speed);
     }
     if(e.keyCode == 32) {
     	e.preventDefault();
