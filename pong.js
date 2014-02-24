@@ -10,9 +10,9 @@ TABLE OF CONTENTS:
 */
 
 //Constructor for paddles
-function Paddle(speed, width, height, score_df, scorebox_id, namebox_id) {
+function Paddle(x, speed, width, height, score_df, scorebox_id, namebox_id) {
 	//default values (by me)
-	this.x_df = 5;
+	this.x_df;
 	this.y_df = 0;
 	this.speed_df = 2.0;
 	this.height_df = 40;
@@ -25,7 +25,7 @@ function Paddle(speed, width, height, score_df, scorebox_id, namebox_id) {
 
 	//From upper left corner
 	this.y = (cvs.height/2)-(this.height/2);
-	this.x = cvs.width/100;
+	this.x = x;
 	//Settings method
 	this.set = paddleSet;
 
@@ -100,8 +100,8 @@ var game_speed=10;
 var cvs = document.getElementById("game_area");
 var ctx = cvs.getContext("2d");
 //Creates paddles
-var p1 = new Paddle(2.0, 7, 40, 0, "player1-score", "player1-name");
-var p2 = new Paddle(2.0, 7, 40, 0, "player2-score", "player2-name");
+var p1 = new Paddle(5, 2.0, 7, 40, 0, "player1-score", "player1-name");
+var p2 = new Paddle(cvs.width-7-5, 2.0, 7, 40, 0, "player2-score", "player2-name");
 //Creates the ball
 var ball = new BallConstructor(cvs.height/2, cvs.width/2, 0.8, 1.1, 10, 10, 0.0000000000001);
 /*
@@ -281,8 +281,8 @@ function gameTick() {
 	ball.x += parseFloat(ball.dx);
 	ball.y += parseFloat(ball.dy);
 	//makes sure paddle doesn't go off screen
-	p1.y = Math.min(Math.max(p1.y+p1.dy, p1.height), cvs.height);
-	p2.y = Math.min(Math.max(p2.y+p2.dy, p2.height), cvs.height);
+	p1.y = Math.min(Math.max(p1.y+p1.dy, 0), cvs.height-p1.height);
+	p2.y = Math.min(Math.max(p2.y+p2.dy, 0), cvs.height-p2.height);
 	
 	var now = new Date().getTime();
 	var delta = (now - then)/1000;
@@ -311,9 +311,8 @@ function paint() {
 
 	ctx.fillStyle = "white";
 	//draws paddles
-	//subtracts .y from height b/c origin is upper left corner
 	ctx.fillRect(p1.x, p1.y, p1.width, p1.height);
-	ctx.fillRect(width-2*p2.x, p2.y, p2.width, p2.height);
+	ctx.fillRect(p2.x, p2.y, p2.width, p2.height);
 
 	//draws ball
 	ctx.fillRect(ball.x, ball.y, ball.width, ball.height);
@@ -333,7 +332,7 @@ function collisionHandler() {
 		p1.misses = 0;
 	}
 	//Direct hit on p2
-	else if(ball.x <= p2.x+p2.width && ball.y >= p2.y && ball.y+ball.height<= p2.y+p2.height) {
+	else if(ball.x <= p2.x && ball.y >= p2.y && ball.y+ball.height<= p2.y+p2.height) {
 		console.log("Hit");
 		ball.dx *= -1;
 		p2.misses = 0;
