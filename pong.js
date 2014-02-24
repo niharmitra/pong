@@ -18,15 +18,14 @@ function Paddle(speed, width, height, score_df, scorebox_id, namebox_id) {
 	this.height_df = 40;
 	this.width_df = 7;
 
-	//From upper left corner
-	//values set by user if changed
-	this.y = cvs.height/2;
-	this.x = cvs.width/100;
 	this.dy = 0;
 	this.speed = speed;
 	this.height = height;
 	this.width = width;
 
+	//From upper left corner
+	this.y = (cvs.height/2)+(this.height/2);
+	this.x = cvs.width/100;
 	//Settings method
 	this.set = paddleSet;
 
@@ -328,12 +327,14 @@ function collisionHandler() {
 		ball.dy *= -1;
 	}
 	//Direct hit on p1
-	else if(ball.x <= p1.x+p1.width && ball.y <= p1.y && ball.y >= p1.y+p1.height) {
+	else if(ball.x <= p1.x+p1.width && ball.y >= p1.y && ball.y+ball.height<= p1.y+p1.height) {
+		console.log("HIT");
 		ball.dx *= -1;
 		p1.misses = 0;
 	}
 	//Direct hit on p2
-	else if(ball.x+ball.width>=p2.x && ball.y <= p2.y && ball.y >= p2.y+p2.height) {
+	else if(ball.x <= p2.x+p2.width && ball.y >= p2.y && ball.y+ball.height<= p2.y+p2.height) {
+		console.log("Hit");
 		ball.dx *= -1;
 		p2.misses = 0;
 	}
