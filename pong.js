@@ -332,7 +332,7 @@ function collisionHandler() {
 		p1.misses = 0;
 	}
 	//Direct hit on p2
-	else if(ball.x <= p2.x && ball.y >= p2.y && ball.y+ball.height<= p2.y+p2.height) {
+	else if(ball.x+ball.width >= p2.x && ball.y >= p2.y && ball.y+ball.height<= p2.y+p2.height) {
 		console.log("Hit");
 		ball.dx *= -1;
 		p2.misses = 0;
