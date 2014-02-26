@@ -1,7 +1,6 @@
 #game_area {
 	width: 500px;
 	height: 500px;
-	float: left;
 }
 
 #game_info {
@@ -13,4 +12,6 @@
 	padding: 2%;
 	padding-left: 5%;
 	float: right;
+	display: inline;
 }
+

@@ -94,7 +94,7 @@ var advanced = false; //advanced settings or not
 var paused = false;
 var then;
 
-var game_speed=10;
+var game_speed=5;
 
 //CANVAS ELEMENTS
 var cvs = document.getElementById("game_area");
@@ -321,30 +321,20 @@ function paint() {
 function collisionHandler() {
 	var offset = Math.floor(Math.random()*cvs.width/10);
 	
+	//range means the x is in correct position
+	//hit means it just hit the paddle
+	var p1_hit = (ball.x - (p1.x+p1.width) == 0) ? true:false;
+	var p2_hit = (ball.x+ball.width - p2.x == 0) ? true:false;
+	var p1_range = (ball.x < p1.x+p1.width) ? true:false;
+	var p2_range = (ball.x+ball.width > p2.x) ? true:false;
+
+	//coll = collision => they hit y-wise
+	var p1_coll = (ball.y >= p1.y && ball.y+ball.height<= p1.y+p1.height) ? true:false;
+	var p2_coll = (ball.y >= p2.y && ball.y+ball.height<= p2.y+p2.height) ? true:false;
 	//bounces the ball off the paddle or wall
 	if(ball.y > cvs.height || ball.y<0) {
 		ball.dy *= -1;
 	}
-	//Direct hit on p1
-	else if(ball.x <= p1.x+p1.width && ball.y >= p1.y && ball.y+ball.height<= p1.y+p1.height) {
-		console.log("HIT");
-		ball.dx *= -1;
-		p1.misses = 0;
-	}
-	//Direct hit on p2
-	else if(ball.x+ball.width >= p2.x && ball.y >= p2.y && ball.y+ball.height<= p2.y+p2.height) {
-		console.log("Hit");
-		ball.dx *= -1;
-		p2.misses = 0;
-	}
-	// //Sketchy hit on p1
-	// else if(false) {
-
-	// }
-	// //Sketchy hit on p2
-	// else if(false) {
-
-	// }
 	//if ball goes out of bounds, gives pts and respawns
 	else if(ball.x > cvs.width) {
  		p1.score += 1;
@@ -376,6 +366,28 @@ function collisionHandler() {
 			ball.dx*=-1;
 			ball.x = ball.spawn_x-offset;
 		}
+	}
+	//Direct hit on p1
+	else if(p1_hit && p1_coll) {
+		console.log("Hit");
+		ball.dx *= -1;
+		p1.misses = 0;
+	}
+	//Direct hit on p2
+	else if(p2_hit && p2_coll) {
+		console.log("Hit");
+		ball.dx *= -1;
+		p2.misses = 0;
+	}
+	//Sketchy hit on p1
+	else if(p1_range && p1_coll) {
+		console.log("That was a close one for "+ p1.name+"!");
+		ball.dx *= -1;
+	}
+	//Sketchy hit on p2
+	else if(p2_range && p2_coll) {
+		console.log("That was a close one for "+p2.name+"!");
+		ball.dx *= -1;
 	}
 }
 
