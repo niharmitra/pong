@@ -103,7 +103,7 @@ var ctx = cvs.getContext("2d");
 var p1 = new Paddle(5, 2.0, 7, 40, 0, "player1-score", "player1-name");
 var p2 = new Paddle(cvs.width-7-5, 2.0, 7, 40, 0, "player2-score", "player2-name");
 //Creates the ball
-var ball = new BallConstructor(cvs.height/2, cvs.width/2, 0.8, 1.1, 10, 10, 0.0000000000001);
+var ball = new BallConstructor(cvs.height/2, cvs.width/2, 1, 1, 10, 10, 0.0000000000001);
 /*
 p1 = Paddle 1, p2 = paddle 2, but also refer to the players
 .x and .y mean x or y position of that element
@@ -322,8 +322,8 @@ function collisionHandler() {
 	var offset = Math.floor(Math.random()*cvs.width/10);
 	
 	//range means the x is in correct position
-	//hit means it just hit the paddle
-	var p1_hit = (ball.x - (p1.x+p1.width) == 0) ? true:false;
+	//hit means it exactly hit the paddle
+	var p1_hit = (p1.x+p1.width - ball.x == 0) ? true:false;
 	var p2_hit = (ball.x+ball.width - p2.x == 0) ? true:false;
 	var p1_range = (ball.x < p1.x+p1.width) ? true:false;
 	var p2_range = (ball.x+ball.width > p2.x) ? true:false;
@@ -369,25 +369,23 @@ function collisionHandler() {
 	}
 	//Direct hit on p1
 	else if(p1_hit && p1_coll) {
-		console.log("Hit");
-		ball.dx *= -1;
+		ball.dx = (ball.dx>=0) ? ball.dx : -ball.dx;
 		p1.misses = 0;
 	}
 	//Direct hit on p2
 	else if(p2_hit && p2_coll) {
-		console.log("Hit");
-		ball.dx *= -1;
+		ball.dx = (ball.dx<=0) ? ball.dx : -ball.dx;
 		p2.misses = 0;
 	}
 	//Sketchy hit on p1
 	else if(p1_range && p1_coll) {
 		console.log("That was a close one for "+ p1.name+"!");
-		ball.dx *= -1;
+		ball.dx = (ball.dx>=0) ? ball.dx : -ball.dx;
 	}
 	//Sketchy hit on p2
 	else if(p2_range && p2_coll) {
 		console.log("That was a close one for "+p2.name+"!");
-		ball.dx *= -1;
+		ball.dx = (ball.dx<=0) ? ball.dx : -ball.dx;
 	}
 }
 
