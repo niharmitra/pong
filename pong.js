@@ -379,12 +379,10 @@ function collisionHandler() {
 	}
 	//Sketchy hit on p1
 	else if(p1_range && p1_coll) {
-		console.log("That was a close one for "+ p1.name+"!");
 		ball.dx = (ball.dx>=0) ? ball.dx : -ball.dx;
 	}
 	//Sketchy hit on p2
 	else if(p2_range && p2_coll) {
-		console.log("That was a close one for "+p2.name+"!");
 		ball.dx = (ball.dx<=0) ? ball.dx : -ball.dx;
 	}
 }
