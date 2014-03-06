@@ -100,10 +100,10 @@ var game_speed=5;
 var cvs = document.getElementById("game_area");
 var ctx = cvs.getContext("2d");
 //Creates paddles
-var p1 = new Paddle(5, 2.0, 7, 40, 0, "player1-score", "player1-name");
-var p2 = new Paddle(cvs.width-7-5, 2.0, 7, 40, 0, "player2-score", "player2-name");
+var p1 = new Paddle(5, 4.0, 7, 40, 0, "player1-score", "player1-name");
+var p2 = new Paddle(cvs.width-7-5, 4.0, 7, 40, 0, "player2-score", "player2-name");
 //Creates the ball
-var ball = new BallConstructor(cvs.height/2, cvs.width/2, 1, 1, 10, 10, 0.0000000000001);
+var ball = new BallConstructor(cvs.height/2, cvs.width/2, 2, 2, 10, 10, 0.0000000000001);
 /*
 p1 = Paddle 1, p2 = paddle 2, but also refer to the players
 .x and .y mean x or y position of that element
