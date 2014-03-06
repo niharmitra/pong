@@ -66,8 +66,11 @@ function BallConstructor(spawn_x, spawn_y, dx, dy, width, height, inc) {
 	this.spawn_x = parseFloat(spawn_x);
 	this.spawn_y = parseFloat(spawn_y);
 
-	this.dx_df = 0.8;
-	this.dy_df = 1.1;
+//	this.dx_df = 0.8;
+//	this.dy_df = 1.1;
+	this.dx_df = 2;
+	this.dx_df = 2;
+	
 	this.dx = parseFloat(dx);
 	this.dy = parseFloat(dy);
 
