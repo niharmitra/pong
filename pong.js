@@ -393,7 +393,6 @@ function collisionHandler() {
 //STARTS GAME
 paint();
 createClickHandlers();
-playerName();
 newGame();
 
 //GAME INPUT RESPONSE
