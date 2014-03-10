@@ -98,13 +98,17 @@ function playerName() {
 	var player2_name = null;
 	while(!player1_name) {
 		player1_name = prompt("What is player 1's name?");
+		if(player1_name.length > 10) {alert("Sorry, your name was too long");player1_name=null;}
 	}
 	p1.namebox.innerHTML = player1_name+":";
-	
+	p1.name = player1_name;
+
 	while(!player2_name) {
 		player2_name = prompt("What is player 2's name?");
+		if(player2_name.length > 10) {alert("Sorry, your name was too long");player2_name=null;}
 	}
 	p2.namebox.innerHTML = player2_name+":";
+	p2.name = player2_name;
 }
 
 //General Event Handlers: Clears default value if clicked
